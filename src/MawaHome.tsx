@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   ArrowDownRight,
   ArrowRight,
@@ -73,6 +73,11 @@ const services: { title: string; description: string; icon: LucideIcon }[] = [
     description: 'Installation and troubleshooting for a more comfortable home.',
     icon: House,
   },
+  {
+    title: 'Renovation',
+    description: 'Air conditioning work to support your renovation or space upgrade.',
+    icon: Wrench,
+  },
 ]
 
 const reasons: { title: string; description: string; icon: LucideIcon }[] = [
@@ -96,6 +101,94 @@ const reasons: { title: string; description: string; icon: LucideIcon }[] = [
     description: 'Tell us what works for you and we will help arrange a visit.',
     icon: Clock3,
   },
+]
+
+const workPhotos = [
+  {
+    src: '/mawa-technician-ceiling-clean.jpeg',
+    alt: 'MAWA technician servicing a ceiling air conditioner',
+    title: 'Ceiling AC servicing',
+  },
+  {
+    src: '/mawa-technician-cleaning.jpeg',
+    alt: 'Technician carefully cleaning an indoor air conditioner',
+    title: 'Indoor unit cleaning',
+  },
+  {
+    src: '/mawa-outdoor-unit-clean.jpeg',
+    alt: 'Cleaning the coil of an outdoor air conditioner',
+    title: 'Outdoor unit cleaning',
+  },
+  {
+    src: '/mawa-indoor-unit-service.jpeg',
+    alt: 'Indoor air conditioner taken apart for servicing',
+    title: 'Detailed maintenance',
+  },
+  {
+    src: '/mawa-installation-work.jpeg',
+    alt: 'Technician working on air conditioner installation piping',
+    title: 'Installation work',
+  },
+  {
+    src: '/mawa-outdoor-installation.jpeg',
+    alt: 'Technician installing outdoor air conditioning units',
+    title: 'Outdoor installation',
+  },
+  {
+    src: '/mawa-finished-installation.jpeg',
+    alt: 'Finished wall-mounted air conditioner installation',
+    title: 'Finished installation',
+  },
+  {
+    src: '/mawa-ceiling-ac-installation.jpeg',
+    alt: 'Finished ceiling cassette air conditioner',
+    title: 'Ceiling cassette AC',
+  },
+]
+
+const priceHighlights = [
+  { category: 'General service', item: 'Wall-mounted AC', price: 'RM 60' },
+  { category: 'Chemical service', item: 'Wall-mounted AC · any HP', price: 'RM 130' },
+  { category: 'Chemical service', item: 'Ceiling cassette · any HP', price: 'RM 180' },
+  { category: 'Overhaul service', item: 'Wall-mounted AC', price: 'RM 200' },
+  { category: 'Installation package', item: 'Wall-mounted · 1.0 HP', price: 'RM 210' },
+  { category: 'Installation package', item: 'Ceiling cassette · 1.5 HP', price: 'RM 280' },
+]
+
+const generalServicePrices = [
+  { item: 'Wall-mounted', price: 'RM 60' },
+  { item: 'Ceiling cassette', price: 'RM 130' },
+  { item: 'FCU', price: 'RM 200' },
+]
+
+const chemicalServicePrices = [
+  { item: 'Wall-mounted · any HP', price: 'RM 130 / unit' },
+  { item: 'Ceiling cassette · any HP', price: 'RM 180 / unit' },
+  { item: 'Ceiling exposed', price: 'RM 180' },
+  { item: 'FCU', price: 'RM 380' },
+  { item: 'Washing machine', price: 'RM 100' },
+]
+
+const overhaulServicePrices = [
+  { item: 'Wall-mounted', price: 'RM 200' },
+  { item: 'Ceiling cassette', price: 'RM 380' },
+  { item: 'Ceiling exposed', price: 'RM 400' },
+  { item: 'FCU air conditioner', price: 'RM 450' },
+]
+
+const wallInstallationPrices = [
+  { item: '1.0 HP', price: 'RM 210' },
+  { item: '1.5 HP', price: 'RM 230' },
+  { item: '2.0 HP', price: 'RM 250' },
+  { item: '2.5 HP', price: 'RM 290' },
+]
+
+const cassetteInstallationPrices = [
+  { item: '1.5 HP', price: 'RM 280' },
+  { item: '2.0 HP', price: 'RM 340' },
+  { item: '2.5 HP', price: 'RM 380' },
+  { item: '3.0 HP', price: 'RM 380' },
+  { item: '3.5 HP', price: 'RM 420' },
 ]
 
 const WHATSAPP_NUMBER = '60173132571'
@@ -142,11 +235,127 @@ function SectionHeading({
   )
 }
 
+function PriceList({ items }: { items: { item: string; price: string }[] }) {
+  return (
+    <ul className="mawa-price-list">
+      {items.map(({ item, price }) => (
+        <li key={item}>
+          <span>{item}</span>
+          <strong>{price}</strong>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function WorkShowcase() {
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) {
+      return
+    }
+
+    const togglePlayback = () => {
+      const isVisible = video.getBoundingClientRect().top < window.innerHeight * 0.9
+      if (isVisible) {
+        video.muted = true
+        video.play().catch(() => undefined)
+        return
+      }
+
+      video.pause()
+      video.currentTime = 0
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.muted = true
+            video.play().catch(() => undefined)
+            return
+          }
+
+          video.pause()
+          video.currentTime = 0
+        })
+      },
+      { threshold: 0.45 },
+    )
+
+    observer.observe(video)
+    togglePlayback()
+
+    return () => {
+      observer.disconnect()
+      video.pause()
+    }
+  }, [])
+
+  return (
+    <section className="mawa-showcase mawa-section" aria-label="Recent MAWA work video">
+      <div className="mawa-container">
+        <SectionHeading
+          eyebrow="Watch our team at work"
+          title="See our technician in action."
+          description="Watch a real MAWA service visit. The video starts when you scroll to it and pauses when you move past."
+        />
+
+        <div className="mawa-showcase__video-frame">
+          <video
+            ref={videoRef}
+            className="mawa-showcase__video"
+            src="/mawa-work.mp4"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+          <div className="mawa-showcase__caption">
+            <span className="mawa-showcase__chip">Work in progress</span>
+            <h3>AC service by the MAWA team</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function MawaHome() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedService, setSelectedService] = useState('')
   const [customerName, setCustomerName] = useState('')
   const [customerMessage, setCustomerMessage] = useState('')
+  const [quickPriceIndex, setQuickPriceIndex] = useState(0)
+  const [quickPriceVisible, setQuickPriceVisible] = useState(false)
+  const [quickPriceDismissed, setQuickPriceDismissed] = useState(false)
+
+  useEffect(() => {
+    if (quickPriceDismissed) {
+      return
+    }
+
+    let hideTimeout: number | undefined
+    const showPrice = () => {
+      setQuickPriceVisible(true)
+      window.clearTimeout(hideTimeout)
+      hideTimeout = window.setTimeout(() => setQuickPriceVisible(false), 8500)
+    }
+
+    const firstDisplay = window.setTimeout(showPrice, 6500)
+    const rotation = window.setInterval(() => {
+      setQuickPriceIndex((index) => (index + 1) % priceHighlights.length)
+      showPrice()
+    }, 35000)
+
+    return () => {
+      window.clearTimeout(firstDisplay)
+      window.clearInterval(rotation)
+      window.clearTimeout(hideTimeout)
+    }
+  }, [quickPriceDismissed])
 
   const visitSection = (section: string) => {
     setMenuOpen(false)
@@ -182,23 +391,30 @@ export default function MawaHome() {
           <Logo />
 
           <button
-            className="mawa-menu-toggle"
+            className={`mawa-menu-toggle${menuOpen ? ' mawa-menu-toggle--open' : ''}`}
             type="button"
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
+            aria-controls="mawa-main-nav"
             onClick={() => setMenuOpen((open) => !open)}
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
-          <nav className={`mawa-nav${menuOpen ? ' mawa-nav--open' : ''}`} aria-label="Main navigation">
+          <nav
+            className={`mawa-nav${menuOpen ? ' mawa-nav--open' : ''}`}
+            id="mawa-main-nav"
+            aria-label="Main navigation"
+          >
             {[
               ['Services', 'services'],
+              ['Prices', 'pricing'],
               ['About us', 'about'],
               ['Why MAWA', 'why-mawa'],
               ['How it works', 'how-it-works'],
-            ].map(([label, section]) => (
+            ].map(([label, section], index) => (
               <a
+                className="mawa-nav__link"
                 href={`#${section}`}
                 key={section}
                 onClick={(event) => {
@@ -206,7 +422,9 @@ export default function MawaHome() {
                   visitSection(section)
                 }}
               >
-                {label}
+                <span className="mawa-nav__index">{String(index + 1).padStart(2, '0')}</span>
+                <span className="mawa-nav__link-label">{label}</span>
+                <ArrowUpRight className="mawa-nav__arrow" size={15} />
               </a>
             ))}
             <button
@@ -334,6 +552,24 @@ export default function MawaHome() {
         </div>
       </section>
 
+      <section className="mawa-work-gallery mawa-section" aria-label="Photos of MAWA air conditioning work">
+        <div className="mawa-container">
+          <SectionHeading
+            eyebrow="Our recent work"
+            title="Real work. Real results."
+            description="A few snapshots from air conditioning cleaning, servicing and installation jobs completed by our team."
+          />
+          <div className="mawa-work-gallery__grid">
+            {workPhotos.map(({ src, alt, title }) => (
+              <figure className="mawa-work-gallery__item" key={src}>
+                <img src={src} alt={alt} loading="lazy" />
+                <figcaption>{title}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="mawa-services mawa-section" id="services">
         <div className="mawa-container">
           <SectionHeading
@@ -366,6 +602,86 @@ export default function MawaHome() {
           </div>
           <p className="mawa-services__note">
             Not sure what your system needs? <button type="button" onClick={() => visitSection('contact')}>Tell us what is going on <ArrowRight size={14} /></button>
+          </p>
+        </div>
+      </section>
+
+      <section className="mawa-pricing mawa-section" id="pricing">
+        <div className="mawa-container">
+          <SectionHeading
+            eyebrow="Clear prices, careful work"
+            title="MAWA Aircon Service prices."
+            description="Straightforward starting prices for our most requested services. If anything needs extra parts or work, we will discuss the cost with you first."
+          />
+
+          <div className="mawa-pricing__grid">
+            <article className="mawa-pricing-card">
+              <span className="mawa-pricing-card__eyebrow">01 · Routine care</span>
+              <h3>General service</h3>
+              <PriceList items={generalServicePrices} />
+              <p className="mawa-pricing-card__note">Gas refill surcharge may apply depending on the unit's existing gas volume.</p>
+            </article>
+
+            <article className="mawa-pricing-card">
+              <span className="mawa-pricing-card__eyebrow">02 · Deep clean</span>
+              <h3>Chemical service</h3>
+              <PriceList items={chemicalServicePrices} />
+              <p className="mawa-pricing-card__note">Wall-mounted and ceiling cassette prices are per unit, regardless of HP.</p>
+            </article>
+
+            <article className="mawa-pricing-card">
+              <span className="mawa-pricing-card__eyebrow">03 · Full clean</span>
+              <h3>Overhaul service</h3>
+              <PriceList items={overhaulServicePrices} />
+              <p className="mawa-pricing-card__note">Includes a free 20 psi gas top-up. Any additional gas requirement will be discussed before work proceeds.</p>
+            </article>
+
+            <article className="mawa-pricing-card mawa-pricing-card--installation">
+              <span className="mawa-pricing-card__eyebrow">04 · Supply & install</span>
+              <h3>Installation packages</h3>
+              <div className="mawa-pricing-card__columns">
+                <div>
+                  <h4>Wall-mounted</h4>
+                  <PriceList items={wallInstallationPrices} />
+                  <p className="mawa-pricing-card__note">Includes 6 ft copper, 6 ft wire, 6 ft insulation and 10 ft drain pipe.</p>
+                </div>
+                <div>
+                  <h4>Ceiling cassette</h4>
+                  <PriceList items={cassetteInstallationPrices} />
+                </div>
+              </div>
+              <div className="mawa-pricing-card__extras">
+                <span>Extra length beyond 6 ft: RM 22 / ft</span>
+                <span>Above 3.0 HP: RM 25 / ft</span>
+                <span>Copper supply & install: RM 11 / ft</span>
+                <span>Cable tray supply & install: RM 22 / ft</span>
+              </div>
+              <p className="mawa-pricing-card__note">30-day workmanship warranty for installation.</p>
+            </article>
+          </div>
+
+          <div className="mawa-pricing__details">
+            <div>
+              <span className="mawa-pricing-card__eyebrow">Included in chemical cleaning</span>
+              <h3>What our chemical service covers</h3>
+              <ul>
+                <li>Indoor cooling coil, filters and casing chemical wash</li>
+                <li>Drainage tray and pipe vacuuming</li>
+                <li>Outdoor coil chemical wash and outdoor drainage pipe vacuuming</li>
+                <li>Compressor health check and free 20 psi gas top-up</li>
+              </ul>
+              <p>Extra gas top-up is RM 2 per psi if required, depending on the unit's existing gas volume and size.</p>
+            </div>
+            <div className="mawa-pricing__terms">
+              <h3>Good to know</h3>
+              <p>30-day workmanship warranty for water-leakage issues. Additional services or replacement parts will be quoted before work proceeds.</p>
+              <p>RM 50 cancellation charge applies if the team has started travelling or has arrived at your location.</p>
+              <p>Renovation, water heater, lighting and fan installation are available on request; the team will provide a quote.</p>
+            </div>
+          </div>
+
+          <p className="mawa-services__note mawa-pricing__cta">
+            Need a quote? <button type="button" onClick={() => visitSection('contact')}>Talk to the MAWA team <ArrowRight size={14} /></button>
           </p>
         </div>
       </section>
@@ -429,6 +745,8 @@ export default function MawaHome() {
           </div>
         </div>
       </section>
+
+      <WorkShowcase />
 
       <section className="mawa-cta-band">
         <div className="mawa-container mawa-cta-band__inner">
@@ -535,6 +853,7 @@ export default function MawaHome() {
               <span>Explore</span>
               {[
                 ['Services', 'services'],
+                ['Prices', 'pricing'],
                 ['About MAWA', 'about'],
                 ['Why choose us', 'why-mawa'],
               ].map(([label, section]) => (
@@ -571,6 +890,31 @@ export default function MawaHome() {
         <MessageCircle size={24} />
         <span>Chat with us</span>
       </a>
+
+      <aside
+        className={`mawa-price-toast${quickPriceVisible ? ' mawa-price-toast--visible' : ''}`}
+        aria-hidden={!quickPriceVisible}
+      >
+        <div className="mawa-price-toast__top">
+          <span><Sparkles size={14} /> Quick price</span>
+          <button
+            type="button"
+            aria-label="Dismiss price highlight"
+            onClick={() => {
+              setQuickPriceDismissed(true)
+              setQuickPriceVisible(false)
+            }}
+          >
+            <X size={15} />
+          </button>
+        </div>
+        <strong className="mawa-price-toast__category">{priceHighlights[quickPriceIndex].category}</strong>
+        <span className="mawa-price-toast__item">{priceHighlights[quickPriceIndex].item}</span>
+        <span className="mawa-price-toast__price">{priceHighlights[quickPriceIndex].price}</span>
+        <button className="mawa-price-toast__link" type="button" onClick={() => visitSection('pricing')}>
+          View all prices <ArrowUpRight size={14} />
+        </button>
+      </aside>
     </main>
   )
 }
