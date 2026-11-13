@@ -1,0 +1,1729 @@
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.mawa-site {
+  --mawa-ink: #282521;
+  --mawa-ink-soft: #645b50;
+  --mawa-accent: #a86e43;
+  --mawa-gold: #caa575;
+  --mawa-pale: #f7f4ee;
+  --mawa-line: #e7dfd4;
+  --mawa-green: #20b76b;
+  color: var(--mawa-ink);
+  background: #fff;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  overflow: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mawa-site *,
+.mawa-site *::before,
+.mawa-site *::after {
+  box-sizing: border-box;
+}
+
+.mawa-site button,
+.mawa-site input,
+.mawa-site select,
+.mawa-site textarea {
+  font: inherit;
+}
+
+.mawa-site button {
+  cursor: pointer;
+}
+
+.mawa-container {
+  width: min(1160px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.mawa-section {
+  padding-block: 104px;
+  scroll-margin-top: 82px;
+}
+
+.mawa-announcement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 37px;
+  padding: 6px 24px;
+  color: #f5eee4;
+  background: #282521;
+  font-size: 11px;
+  letter-spacing: 0.015em;
+}
+
+.mawa-announcement__dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--mawa-gold);
+  box-shadow: 0 0 0 4px #caa57523;
+}
+
+.mawa-announcement button {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  color: #e0c091;
+  background: none;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.mawa-header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid #eae4db;
+  background: rgb(255 255 255 / 96%);
+  backdrop-filter: blur(16px);
+}
+
+.mawa-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1280px, calc(100% - 64px));
+  min-height: 90px;
+  margin-inline: auto;
+}
+
+.mawa-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--mawa-ink);
+  text-decoration: none;
+}
+
+.mawa-logo__image {
+  display: block;
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+}
+
+.mawa-nav {
+  display: flex;
+  align-items: center;
+  gap: 33px;
+}
+
+.mawa-nav > a {
+  color: #585147;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.mawa-nav > a:hover {
+  color: var(--mawa-accent);
+}
+
+.mawa-button {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.mawa-button:hover {
+  transform: translateY(-2px);
+}
+
+.mawa-button--nav {
+  min-height: 41px;
+  padding-inline: 16px;
+  color: #fff;
+  background: var(--mawa-ink);
+}
+
+.mawa-button--nav:hover {
+  color: #fff;
+  background: var(--mawa-accent);
+}
+
+.mawa-button--primary {
+  color: #fff;
+  background: var(--mawa-accent);
+  box-shadow: 0 9px 22px #a86e432b;
+}
+
+.mawa-button--primary:hover {
+  color: #fff;
+  background: #835632;
+}
+
+.mawa-button--outline {
+  border-color: #dcd3c8;
+  color: var(--mawa-ink);
+  background: transparent;
+}
+
+.mawa-button--outline:hover {
+  border-color: var(--mawa-accent);
+  color: var(--mawa-accent);
+}
+
+.mawa-menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--mawa-line);
+  border-radius: 7px;
+  color: var(--mawa-ink);
+  background: #fff;
+}
+
+.mawa-hero {
+  position: relative;
+  min-height: 636px;
+  padding-block: 71px 82px;
+  background:
+    radial-gradient(ellipse at 68% 32%, rgb(241 226 207 / 48%), transparent 35%),
+    linear-gradient(115deg, #fcfaf6 0%, #f8f5ef 56%, #f5f1e9 100%);
+  scroll-margin-top: 78px;
+}
+
+.mawa-hero__glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgb(237 222 201 / 42%));
+  pointer-events: none;
+}
+
+.mawa-hero__inner {
+  position: relative;
+  display: grid;
+  min-height: 480px;
+  align-items: center;
+  grid-template-columns: 1fr 0.98fr;
+  gap: 50px;
+}
+
+.mawa-hero__copy {
+  position: relative;
+  z-index: 2;
+  padding-block: 4px 18px;
+}
+
+.mawa-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 23px;
+  color: #6d6356;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mawa-kicker__icon {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid #e7ddcf;
+  border-radius: 50%;
+  color: var(--mawa-accent);
+  background: #fff;
+}
+
+.mawa-hero h1 {
+  margin: 0;
+  color: #282521;
+  font-size: clamp(48px, 5.4vw, 72px);
+  font-weight: 760;
+  letter-spacing: -0.065em;
+  line-height: 1.045;
+}
+
+.mawa-hero h1 span {
+  color: var(--mawa-accent);
+}
+
+.mawa-hero__description {
+  max-width: 470px;
+  margin: 24px 0 0;
+  color: #635a50;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.mawa-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.mawa-hero__actions .mawa-button {
+  min-height: 49px;
+}
+
+.mawa-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 0;
+  border: 0;
+  color: var(--mawa-ink);
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mawa-text-link:hover {
+  color: var(--mawa-accent);
+}
+
+.mawa-hero__proof {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 33px;
+  color: #766e62;
+  font-size: 11px;
+}
+
+.mawa-hero__proof-icon {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 50%;
+  color: #128d60;
+  background: #e5f6ee;
+}
+
+.mawa-hero__visual {
+  position: relative;
+  min-height: 446px;
+  margin-right: 19px;
+  border-radius: 12px 12px 12px 90px;
+  background: #c5d5e0;
+  box-shadow: 0 28px 65px rgb(54 45 35 / 13%);
+}
+
+.mawa-hero__image,
+.mawa-hero__image-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.mawa-hero__image {
+  background-image: url("https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=85");
+  background-position: 52% center;
+  background-size: cover;
+}
+
+.mawa-hero__image-shade {
+  background: linear-gradient(180deg, rgb(35 31 25 / 4%) 50%, rgb(35 31 25 / 73%) 100%);
+}
+
+.mawa-hero__image-caption {
+  position: absolute;
+  right: 23px;
+  bottom: 23px;
+  left: 23px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #fff;
+}
+
+.mawa-caption-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 50%;
+  color: #fff;
+  background: rgb(255 255 255 / 16%);
+  backdrop-filter: blur(8px);
+}
+
+.mawa-hero__image-caption > span:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+.mawa-hero__image-caption strong {
+  font-size: 13px;
+}
+
+.mawa-hero__image-caption small {
+  color: rgb(255 255 255 / 78%);
+  font-size: 10px;
+}
+
+.mawa-hero__floating-card {
+  position: absolute;
+  top: 34px;
+  left: -44px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 18px 13px 13px;
+  border: 1px solid rgb(226 233 241 / 82%);
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 15px 40px rgb(45 38 29 / 11%);
+}
+
+.mawa-floating-card__icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  border-radius: 8px;
+  color: #118b61;
+  background: #e9f7f0;
+}
+
+.mawa-hero__floating-card > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.mawa-hero__floating-card strong {
+  font-size: 11px;
+}
+
+.mawa-hero__floating-card small {
+  color: #718094;
+  font-size: 9px;
+}
+
+.mawa-hero__vertical-label {
+  position: absolute;
+  right: -37px;
+  top: 57px;
+  color: #74849a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  writing-mode: vertical-rl;
+}
+
+.mawa-hero__scroll {
+  position: absolute;
+  bottom: -34px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8390a0;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mawa-hero__scroll span {
+  width: 30px;
+  height: 1px;
+  background: #a7b3c2;
+}
+
+.mawa-trust-strip {
+  border-bottom: 1px solid #edf0f4;
+  background: #fff;
+}
+
+.mawa-trust-strip__inner {
+  display: grid;
+  min-height: 81px;
+  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.mawa-trust-strip__inner > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #607087;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.mawa-trust-strip__inner svg {
+  flex: 0 0 auto;
+  color: #a86e43;
+  stroke-width: 1.8;
+}
+
+.mawa-about {
+  background: #fff;
+}
+
+.mawa-about__grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 0.97fr 1fr;
+  gap: 99px;
+}
+
+.mawa-about__visual {
+  position: relative;
+  min-height: 431px;
+  margin: 12px 22px 12px 0;
+}
+
+.mawa-about__photo {
+  position: absolute;
+  inset: 0 18px 18px 0;
+  border-radius: 10px 85px 10px 10px;
+  background: #e9e1d6 url("https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1050&q=85") center / cover;
+}
+
+.mawa-about__photo-accent {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  width: 45%;
+  height: 44%;
+  border-right: 1px solid #c5a16f;
+  border-bottom: 1px solid #c5a16f;
+  border-radius: 0 0 12px;
+  pointer-events: none;
+}
+
+.mawa-about__note {
+  position: absolute;
+  right: -25px;
+  bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 19px;
+  border: 1px solid #ebe4da;
+  border-radius: 8px;
+  color: var(--mawa-accent);
+  background: #fff;
+  box-shadow: 0 14px 38px rgb(45 38 29 / 11%);
+}
+
+.mawa-about__note span {
+  display: flex;
+  flex-direction: column;
+}
+
+.mawa-about__note strong {
+  color: var(--mawa-ink);
+  font-size: 11px;
+}
+
+.mawa-about__note small {
+  color: #758398;
+  font-size: 9px;
+}
+
+.mawa-section-heading {
+  max-width: 630px;
+  margin: 0 auto 43px;
+}
+
+.mawa-section-heading--left {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.mawa-eyebrow {
+  display: inline-block;
+  color: var(--mawa-accent);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.mawa-section-heading h2 {
+  margin: 10px 0 0;
+  color: #282521;
+  font-size: clamp(29px, 3.3vw, 41px);
+  font-weight: 740;
+  letter-spacing: -0.05em;
+  line-height: 1.17;
+}
+
+.mawa-section-heading p {
+  max-width: 580px;
+  margin: 14px auto 0;
+  color: #70675c;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.mawa-section-heading--left p {
+  margin-left: 0;
+}
+
+.mawa-about__copy > p {
+  margin: 14px 0 0;
+  color: #6a6258;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.mawa-check-list {
+  display: grid;
+  gap: 11px;
+  margin: 22px 0 25px;
+  padding: 0;
+  list-style: none;
+}
+
+.mawa-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4c453b;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.mawa-check-list svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  padding: 4px;
+  border-radius: 50%;
+  color: #128c60;
+  background: #eef3e9;
+}
+
+.mawa-about__copy > .mawa-button {
+  min-height: 43px;
+}
+
+.mawa-services {
+  background: var(--mawa-pale);
+}
+
+.mawa-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.mawa-service-card {
+  display: flex;
+  min-height: 215px;
+  flex-direction: column;
+  padding: 23px 24px 19px;
+  border: 1px solid #e5ebf2;
+  border-radius: 8px;
+  background: #fff;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.mawa-service-card:hover {
+  transform: translateY(-4px);
+  border-color: #e8d8c4;
+  box-shadow: 0 13px 28px rgb(81 60 41 / 8%);
+}
+
+.mawa-service-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mawa-service-card__icon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid #dce9f7;
+  border-radius: 8px;
+  color: var(--mawa-accent);
+  background: #fbf8f2;
+}
+
+.mawa-service-card__number {
+  color: #b8ac9b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.mawa-service-card h3 {
+  margin: 17px 0 5px;
+  color: #302c27;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.mawa-service-card p {
+  margin: 0;
+  color: #766c60;
+  font-size: 10px;
+  line-height: 1.75;
+}
+
+.mawa-service-card__link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  padding: 15px 0 0;
+  border: 0;
+  color: #a86e43;
+  background: transparent;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mawa-service-card__link:hover {
+  color: #815432;
+}
+
+.mawa-services__note {
+  margin: 27px 0 0;
+  color: #70675c;
+  font-size: 11px;
+  text-align: center;
+}
+
+.mawa-services__note button {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  color: var(--mawa-accent);
+  background: none;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.mawa-why {
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 93% 13%, rgb(190 150 102 / 18%), transparent 29%),
+    linear-gradient(118deg, #282521 0%, #36322c 100%);
+}
+
+.mawa-why .mawa-section-heading h2 {
+  color: #fff;
+}
+
+.mawa-why .mawa-section-heading p {
+  color: #c9bdad;
+}
+
+.mawa-why .mawa-eyebrow {
+  color: #caab7b;
+}
+
+.mawa-why__intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 19px;
+}
+
+.mawa-why__intro .mawa-section-heading {
+  max-width: 550px;
+  margin-bottom: 23px;
+}
+
+.mawa-why__seal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 33px;
+  color: #d1b07b;
+}
+
+.mawa-why__seal span {
+  color: #d0c4b3;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+
+.mawa-reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgb(220 208 191 / 15%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 3%);
+}
+
+.mawa-reason {
+  position: relative;
+  min-height: 210px;
+  padding: 24px 23px 22px;
+}
+
+.mawa-reason + .mawa-reason {
+  border-left: 1px solid rgb(220 208 191 / 15%);
+}
+
+.mawa-reason__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgb(201 165 111 / 30%);
+  border-radius: 9px;
+  color: #d1b07b;
+  background: rgb(201 165 111 / 8%);
+}
+
+.mawa-reason__number {
+  position: absolute;
+  top: 26px;
+  right: 22px;
+  color: rgb(194 180 158 / 40%);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.mawa-reason h3 {
+  margin: 22px 0 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mawa-reason p {
+  margin: 0;
+  color: #c3b8a9;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.mawa-process {
+  background: #fff;
+}
+
+.mawa-process__grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 0.86fr 1fr;
+  gap: 103px;
+}
+
+.mawa-process__intro .mawa-section-heading {
+  margin-bottom: 26px;
+}
+
+.mawa-process__intro > .mawa-button {
+  min-height: 46px;
+}
+
+.mawa-steps {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding-block: 5px;
+}
+
+.mawa-steps::before {
+  position: absolute;
+  top: 34px;
+  bottom: 49px;
+  left: 23px;
+  width: 1px;
+  background: #e7ded1;
+  content: "";
+}
+
+.mawa-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 47px 1fr;
+  gap: 20px;
+  padding-bottom: 31px;
+}
+
+.mawa-step:last-child {
+  padding-bottom: 0;
+}
+
+.mawa-step__icon {
+  z-index: 1;
+  display: grid;
+  width: 47px;
+  height: 47px;
+  place-items: center;
+  border: 1px solid #e6d9c7;
+  border-radius: 50%;
+  color: var(--mawa-accent);
+  background: #fbf8f2;
+}
+
+.mawa-step__eyebrow {
+  color: #b38253;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.mawa-step h3 {
+  margin: 4px 0 5px;
+  color: #292621;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.mawa-step p {
+  max-width: 450px;
+  margin: 0;
+  color: #766e63;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.mawa-cta-band {
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 12% 100%, rgb(205 164 112 / 20%), transparent 32%),
+    linear-gradient(110deg, #a86e43 0%, #bf8251 55%, #865937 100%);
+}
+
+.mawa-cta-band__inner {
+  display: flex;
+  min-height: 160px;
+  align-items: center;
+  gap: 20px;
+}
+
+.mawa-cta-band__icon {
+  display: grid;
+  width: 49px;
+  height: 49px;
+  flex: 0 0 49px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 32%);
+  border-radius: 11px;
+  color: #fff;
+  background: rgb(255 255 255 / 12%);
+}
+
+.mawa-cta-band__inner > div {
+  flex: 1;
+}
+
+.mawa-cta-band .mawa-eyebrow {
+  color: #ead7ba;
+}
+
+.mawa-cta-band h2 {
+  margin: 5px 0 0;
+  color: #fff;
+  font-size: clamp(22px, 3vw, 31px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+}
+
+.mawa-button--light {
+  min-height: 45px;
+  color: #815432;
+  background: #fff;
+}
+
+.mawa-button--light:hover {
+  color: #795032;
+  background: #f4eadb;
+}
+
+.mawa-contact {
+  background: #f8f5ef;
+}
+
+.mawa-contact__grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 0.9fr 1fr;
+  gap: 103px;
+}
+
+.mawa-contact__copy .mawa-section-heading {
+  margin-bottom: 29px;
+}
+
+.mawa-contact__whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 15px;
+  border: 1px solid #e0e9e9;
+  border-radius: 8px;
+  color: inherit;
+  background: #fff;
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.mawa-contact__whatsapp:hover {
+  transform: translateY(-2px);
+  border-color: #a2dac0;
+}
+
+.mawa-contact__whatsapp-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border-radius: 50%;
+  color: #119d60;
+  background: #e8f7ef;
+}
+
+.mawa-contact__whatsapp > span:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.mawa-contact__whatsapp strong {
+  color: #38332c;
+  font-size: 11px;
+}
+
+.mawa-contact__whatsapp small {
+  color: #766e63;
+  font-size: 9px;
+}
+
+.mawa-contact__whatsapp > svg {
+  color: #766e63;
+}
+
+.mawa-contact__location {
+  display: flex;
+  align-items: start;
+  gap: 11px;
+  margin-top: 20px;
+  color: var(--mawa-accent);
+}
+
+.mawa-contact__location span {
+  display: flex;
+  flex-direction: column;
+}
+
+.mawa-contact__location strong {
+  color: #36312a;
+  font-size: 10px;
+}
+
+.mawa-contact__location small {
+  margin-top: 2px;
+  color: #777064;
+  font-size: 9px;
+}
+
+.mawa-contact__details {
+  display: grid;
+  gap: 11px;
+  margin-top: 18px;
+}
+
+.mawa-contact__detail {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--mawa-accent);
+  text-decoration: none;
+}
+
+.mawa-contact__detail span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.mawa-contact__detail strong {
+  color: #36312a;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.mawa-contact__detail small {
+  margin-top: 2px;
+  color: #777064;
+  font-size: 9px;
+}
+
+.mawa-contact__detail:hover strong {
+  color: var(--mawa-accent);
+}
+
+.mawa-inquiry {
+  padding: 28px 29px 21px;
+  border: 1px solid #e9e1d6;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 16px 38px rgb(45 38 29 / 5%);
+}
+
+.mawa-inquiry__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.mawa-inquiry__heading h3 {
+  margin: 5px 0 0;
+  color: #292621;
+  font-size: 21px;
+  font-weight: 730;
+  letter-spacing: -0.04em;
+}
+
+.mawa-inquiry__sparkle {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--mawa-accent);
+  background: #f6f1e8;
+}
+
+.mawa-inquiry label {
+  display: block;
+  margin: 13px 0 6px;
+  color: #4c453b;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mawa-inquiry label span {
+  color: #918679;
+  font-weight: 400;
+}
+
+.mawa-inquiry input,
+.mawa-inquiry select,
+.mawa-inquiry textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #e6ded2;
+  border-radius: 6px;
+  outline: none;
+  color: #37332c;
+  background: #fff;
+  font-size: 11px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.mawa-inquiry input::placeholder,
+.mawa-inquiry textarea::placeholder {
+  color: #988c7e;
+}
+
+.mawa-inquiry input:focus,
+.mawa-inquiry select:focus,
+.mawa-inquiry textarea:focus {
+  border-color: #c09060;
+  box-shadow: 0 0 0 3px rgb(168 110 67 / 12%);
+}
+
+.mawa-inquiry textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.mawa-select-wrap {
+  position: relative;
+}
+
+.mawa-inquiry select {
+  appearance: none;
+  padding-right: 36px;
+}
+
+.mawa-select-wrap > svg {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  color: #718094;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.mawa-inquiry__submit {
+  width: 100%;
+  min-height: 45px;
+  margin-top: 18px;
+}
+
+.mawa-inquiry__privacy {
+  margin: 11px 0 0;
+  color: #877d71;
+  font-size: 9px;
+  text-align: center;
+}
+
+.mawa-footer {
+  color: #e7ddd0;
+  background: #282521;
+}
+
+.mawa-footer__top {
+  display: grid;
+  min-height: 203px;
+  align-items: start;
+  grid-template-columns: 1.4fr 0.7fr 1fr auto;
+  gap: 40px;
+  padding-block: 43px 31px;
+}
+
+.mawa-logo--light .mawa-logo__image {
+  border-radius: 8px;
+}
+
+.mawa-footer__brand p {
+  margin: 15px 0 0;
+  color: #c1b4a1;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.mawa-footer__links,
+.mawa-footer__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.mawa-footer__links > span,
+.mawa-footer__contact > span:first-child {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mawa-footer__links button,
+.mawa-footer__contact > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  color: #c1b4a1;
+  background: none;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.mawa-footer__links button:hover,
+.mawa-footer__contact > a:hover {
+  color: #dcc091;
+}
+
+.mawa-footer__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #c1b4a1;
+  font-size: 10px;
+}
+
+.mawa-footer__top-link {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgb(220 208 191 / 24%);
+  border-radius: 50%;
+  color: #fff;
+  background: transparent;
+  transform: rotate(-45deg);
+  transition: background 140ms ease;
+}
+
+.mawa-footer__top-link:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.mawa-footer__bottom {
+  display: flex;
+  min-height: 53px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid rgb(208 224 242 / 13%);
+  color: #b8a990;
+  font-size: 9px;
+}
+
+.mawa-footer__bottom > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mawa-footer__bottom svg {
+  color: #d1b07b;
+}
+
+.mawa-whatsapp-float {
+  position: fixed;
+  z-index: 30;
+  right: 25px;
+  bottom: 24px;
+  display: inline-flex;
+  min-height: 53px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 17px;
+  border: 1px solid #149557;
+  border-radius: 30px;
+  color: #fff;
+  background: #17a765;
+  box-shadow: 0 8px 24px rgb(45 38 29 / 24%);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.mawa-whatsapp-float:hover {
+  transform: translateY(-3px);
+  color: #fff;
+  background: #128d55;
+}
+
+@media (max-width: 1000px) {
+  .mawa-nav {
+    gap: 20px;
+  }
+
+  .mawa-hero__inner {
+    gap: 37px;
+  }
+
+  .mawa-hero__visual {
+    min-height: 405px;
+  }
+
+  .mawa-about__grid,
+  .mawa-process__grid,
+  .mawa-contact__grid {
+    gap: 60px;
+  }
+
+  .mawa-reason {
+    padding-inline: 17px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mawa-container {
+    width: min(100% - 42px, 560px);
+  }
+
+  .mawa-section {
+    padding-block: 74px;
+  }
+
+  .mawa-header__inner {
+    width: calc(100% - 40px);
+    min-height: 72px;
+  }
+
+  .mawa-logo__image {
+    width: 68px;
+    height: 68px;
+  }
+
+  .mawa-menu-toggle {
+    display: inline-flex;
+  }
+
+  .mawa-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: none;
+    align-items: stretch;
+    gap: 0;
+    padding: 9px 21px 18px;
+    border-bottom: 1px solid #eae4db;
+    background: #fff;
+    box-shadow: 0 17px 25px rgb(45 38 29 / 7%);
+  }
+
+  .mawa-nav--open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mawa-nav > a {
+    padding: 12px 2px;
+    border-bottom: 1px solid #f0f3f6;
+    font-size: 13px;
+  }
+
+  .mawa-nav > .mawa-button {
+    width: fit-content;
+    margin-top: 14px;
+  }
+
+  .mawa-hero {
+    min-height: auto;
+    padding-block: 51px 59px;
+  }
+
+  .mawa-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 39px;
+  }
+
+  .mawa-hero__copy {
+    padding: 0;
+  }
+
+  .mawa-kicker {
+    margin-bottom: 18px;
+  }
+
+  .mawa-hero h1 {
+    font-size: clamp(47px, 10.5vw, 68px);
+  }
+
+  .mawa-hero__description {
+    max-width: 510px;
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  .mawa-hero__actions {
+    margin-top: 23px;
+  }
+
+  .mawa-hero__proof {
+    margin-top: 23px;
+  }
+
+  .mawa-hero__visual {
+    min-height: min(80vw, 410px);
+    margin: 0 10px 0 18px;
+    border-radius: 10px 10px 10px 57px;
+  }
+
+  .mawa-hero__floating-card {
+    top: 22px;
+    left: -18px;
+    padding: 10px 12px 10px 10px;
+  }
+
+  .mawa-hero__vertical-label {
+    right: -21px;
+    top: 43px;
+    font-size: 7px;
+  }
+
+  .mawa-hero__scroll {
+    display: none;
+  }
+
+  .mawa-trust-strip__inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 19px 13px;
+    padding-block: 19px;
+  }
+
+  .mawa-trust-strip__inner > div {
+    justify-content: flex-start;
+    font-size: 9px;
+  }
+
+  .mawa-about__grid,
+  .mawa-process__grid,
+  .mawa-contact__grid {
+    grid-template-columns: 1fr;
+    gap: 39px;
+  }
+
+  .mawa-about__visual {
+    min-height: min(75vw, 370px);
+    margin: 0 13px 0 0;
+  }
+
+  .mawa-about__photo {
+    border-top-right-radius: 62px;
+  }
+
+  .mawa-about__note {
+    right: -13px;
+    bottom: 24px;
+    padding: 11px 14px;
+  }
+
+  .mawa-section-heading {
+    margin-bottom: 30px;
+  }
+
+  .mawa-section-heading h2 {
+    font-size: clamp(29px, 7vw, 38px);
+  }
+
+  .mawa-about__copy > p {
+    font-size: 12px;
+  }
+
+  .mawa-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .mawa-service-card {
+    min-height: 210px;
+    padding: 17px 16px 15px;
+  }
+
+  .mawa-service-card h3 {
+    font-size: 12px;
+  }
+
+  .mawa-service-card p {
+    font-size: 9px;
+  }
+
+  .mawa-service-card__link {
+    font-size: 9px;
+  }
+
+  .mawa-why__intro {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .mawa-why__intro .mawa-section-heading {
+    margin-bottom: 25px;
+  }
+
+  .mawa-why__seal {
+    display: none;
+  }
+
+  .mawa-reasons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mawa-reason {
+    min-height: 186px;
+    padding: 18px 16px;
+  }
+
+  .mawa-reason:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .mawa-reason:nth-child(n + 3) {
+    border-top: 1px solid rgb(220 208 191 / 15%);
+  }
+
+  .mawa-reason__number {
+    top: 22px;
+    right: 15px;
+  }
+
+  .mawa-reason h3 {
+    margin-top: 18px;
+    font-size: 11px;
+  }
+
+  .mawa-reason p {
+    font-size: 9px;
+  }
+
+  .mawa-process__grid {
+    gap: 34px;
+  }
+
+  .mawa-steps::before {
+    bottom: 42px;
+  }
+
+  .mawa-step {
+    gap: 14px;
+    padding-bottom: 25px;
+  }
+
+  .mawa-step h3 {
+    font-size: 13px;
+  }
+
+  .mawa-step p {
+    font-size: 10px;
+  }
+
+  .mawa-cta-band__inner {
+    min-height: 155px;
+    flex-wrap: wrap;
+    gap: 11px 15px;
+    padding-block: 22px;
+  }
+
+  .mawa-cta-band__icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .mawa-cta-band__inner > div {
+    min-width: calc(100% - 60px);
+  }
+
+  .mawa-cta-band h2 {
+    font-size: 22px;
+  }
+
+  .mawa-cta-band__inner > .mawa-button {
+    margin-left: 57px;
+  }
+
+  .mawa-contact__grid {
+    gap: 33px;
+  }
+
+  .mawa-inquiry {
+    padding: 23px 20px 19px;
+  }
+
+  .mawa-footer__top {
+    grid-template-columns: 1fr 1fr;
+    gap: 31px 18px;
+    padding-block: 35px 27px;
+  }
+
+  .mawa-footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .mawa-footer__contact {
+    grid-column: 1 / 2;
+  }
+
+  .mawa-footer__top-link {
+    justify-self: end;
+  }
+
+  .mawa-footer__bottom {
+    min-height: 62px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding-block: 10px;
+  }
+
+  .mawa-whatsapp-float {
+    right: 15px;
+    bottom: 15px;
+    width: 51px;
+    min-height: 51px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .mawa-whatsapp-float span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 400px) {
+  .mawa-container {
+    width: calc(100% - 32px);
+  }
+
+  .mawa-announcement {
+    font-size: 10px;
+  }
+
+  .mawa-hero h1 {
+    font-size: 45px;
+  }
+
+  .mawa-hero__actions {
+    gap: 13px;
+  }
+
+  .mawa-hero__actions .mawa-button {
+    padding-inline: 13px;
+    font-size: 11px;
+  }
+
+  .mawa-service-card {
+    min-height: 219px;
+    padding-inline: 13px;
+  }
+
+  .mawa-service-card__icon {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mawa-site *,
+  .mawa-site *::before,
+  .mawa-site *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
