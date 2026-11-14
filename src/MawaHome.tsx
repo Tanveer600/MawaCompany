@@ -195,16 +195,25 @@ type PricingSlide = {
   note?: string
 }
 
+type ServiceSpotlight = {
+  eyebrow: string
+  title: string
+  description: string
+  icon: LucideIcon
+  background: string
+}
+
 type HeroSlide =
   | { type: 'photo'; src: string; alt: string; title: string }
   | { type: 'service'; slide: PricingSlide }
+  | { type: 'spotlight'; slide: ServiceSpotlight }
 
 const pricingSlides: PricingSlide[] = [
   {
     eyebrow: '01 · Routine care',
     title: 'General service',
     icon: Sparkles,
-    background: workPhotos[1].src,
+    background: '/mawa-price-general.jpg',
     groups: [{ items: generalServicePrices }],
     note: "Gas refill surcharge may apply depending on the unit's existing gas volume.",
   },
@@ -212,7 +221,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '02 · Deep clean',
     title: 'Chemical service',
     icon: Droplets,
-    background: workPhotos[2].src,
+    background: '/mawa-price-chemical.jpg',
     groups: [{ items: chemicalServicePrices }],
     note: 'Wall-mounted and ceiling cassette prices are per unit, regardless of HP.',
   },
@@ -220,7 +229,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '03 · Full clean',
     title: 'Overhaul service',
     icon: Wrench,
-    background: workPhotos[3].src,
+    background: '/mawa-price-overhaul.jpg',
     groups: [{ items: overhaulServicePrices }],
     note: 'Includes a free 20 psi gas top-up. Any additional gas requirement will be discussed before work proceeds.',
   },
@@ -228,7 +237,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '04 · Supply & install',
     title: 'Installation packages',
     icon: Wind,
-    background: workPhotos[4].src,
+    background: '/mawa-price-installation.jpg',
     groups: [
       {
         title: 'Wall-mounted',
@@ -247,6 +256,44 @@ const pricingSlides: PricingSlide[] = [
   },
 ]
 
+const serviceSpotlightSlides: ServiceSpotlight[] = [
+  {
+    eyebrow: '01 · Repair & diagnostics',
+    title: 'AC repairs, done with care',
+    description: 'If your AC is not cooling as it should, we inspect the system, identify the likely cause and explain repair options before work begins.',
+    icon: Wrench,
+    background: workPhotos[3].src,
+  },
+  {
+    eyebrow: '02 · Leak & drainage',
+    title: 'Trace leaks to their source',
+    description: 'We check the drain line, filters and indoor unit to find where water is escaping, then talk you through practical next steps.',
+    icon: Droplets,
+    background: workPhotos[0].src,
+  },
+  {
+    eyebrow: '03 · Ceiling & cassette units',
+    title: 'Care for hard-to-reach units',
+    description: 'From ceiling cassettes to exposed fan-coil units, careful cleaning and system checks help keep hard-to-reach equipment working smoothly.',
+    icon: PanelsTopLeft,
+    background: workPhotos[7].src,
+  },
+  {
+    eyebrow: '04 · Outdoor unit care',
+    title: 'Give your outdoor unit room to breathe',
+    description: 'We clean the outdoor coil and check for visible issues to help maintain airflow in Malaysia’s warm, humid conditions.',
+    icon: Fan,
+    background: workPhotos[2].src,
+  },
+  {
+    eyebrow: '05 · Relocation & installation',
+    title: 'A smoother move for your AC',
+    description: 'Moving home or upgrading your space? We can carefully remove and relocate your AC, with attention to pipework, drainage and a neat finish.',
+    icon: ArrowDownRight,
+    background: workPhotos[5].src,
+  },
+]
+
 const heroSlides: HeroSlide[] = [
   {
     type: 'photo',
@@ -255,6 +302,7 @@ const heroSlides: HeroSlide[] = [
     title: 'Careful AC installation',
   },
   ...pricingSlides.map((slide) => ({ type: 'service' as const, slide })),
+  ...serviceSpotlightSlides.map((slide) => ({ type: 'spotlight' as const, slide })),
 ]
 
 const WHATSAPP_NUMBER = '60173132571'
@@ -361,6 +409,22 @@ function PricingServiceCard({ slide }: { slide: PricingSlide }) {
       )}
       {slide.note && <p className="mawa-pricing-card__note">{slide.note}</p>}
     </article>
+  )
+}
+
+function ServiceSpotlightCard({ slide }: { slide: ServiceSpotlight }) {
+  const Icon = slide.icon
+
+  return (
+    <div className="mawa-hero__spotlight-copy">
+      <span className="mawa-pricing-card__eyebrow">{slide.eyebrow}</span>
+      <div className="mawa-hero__spotlight-heading">
+        <h3>{slide.title}</h3>
+        <span className="mawa-pricing-card__icon"><Icon size={28} strokeWidth={1.8} /></span>
+      </div>
+      <p>{slide.description}</p>
+      <span className="mawa-hero__spotlight-brand">MAWA Air Cond Service</span>
+    </div>
   )
 }
 
@@ -582,7 +646,7 @@ export default function MawaHome() {
             className="mawa-hero__visual"
             role="region"
             aria-roledescription="carousel"
-            aria-label="MAWA work photo and service-price posters"
+            aria-label="MAWA work photo, service-price posters and service descriptions"
           >
             <div
               className="mawa-hero__slides"
@@ -609,15 +673,25 @@ export default function MawaHome() {
                       </span>
                     </div>
                   </div>
-                ) : (
+                ) : slide.type === 'service' ? (
                   <article
                     className="mawa-hero__poster-slide mawa-hero__poster-slide--service"
                     aria-hidden={index !== heroSlideIndex}
                     aria-label={`${slide.slide.title}, service poster ${index + 1} of ${heroSlides.length}`}
-                    key={slide.slide.title}
+                    key={`service-${slide.slide.title}`}
                   >
                     <img className="mawa-hero__poster-background" src={slide.slide.background} alt="" aria-hidden="true" />
                     <PricingServiceCard slide={slide.slide} />
+                  </article>
+                ) : (
+                  <article
+                    className="mawa-hero__poster-slide mawa-hero__poster-slide--spotlight"
+                    aria-hidden={index !== heroSlideIndex}
+                    aria-label={`${slide.slide.title}: ${slide.slide.description}, slide ${index + 1} of ${heroSlides.length}`}
+                    key={`spotlight-${slide.slide.title}`}
+                  >
+                    <img className="mawa-hero__poster-background" src={slide.slide.background} alt="" aria-hidden="true" />
+                    <ServiceSpotlightCard slide={slide.slide} />
                   </article>
                 ),
               )}
@@ -625,7 +699,7 @@ export default function MawaHome() {
             <div className="mawa-hero__carousel-controls">
               <button
                 type="button"
-                aria-label="Previous price slide"
+                aria-label="Previous carousel slide"
                 onClick={() => setHeroSlideIndex((index) => (index - 1 + heroSlides.length) % heroSlides.length)}
               >
                 <ChevronLeft size={17} />
@@ -635,7 +709,7 @@ export default function MawaHome() {
               </span>
               <button
                 type="button"
-                aria-label="Next price slide"
+                aria-label="Next carousel slide"
                 onClick={() => setHeroSlideIndex((index) => (index + 1) % heroSlides.length)}
               >
                 <ChevronRight size={17} />
