@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "npm run generate:website-qr && tsc --noEmit && vite build",
+    "generate:website-qr": "node scripts/generate-website-qr-pdf.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "jspdf": "^4.2.1",
     "lucide-react": "^1.11.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

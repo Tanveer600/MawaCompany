@@ -46,7 +46,7 @@ body {
 }
 
 .mawa-section {
-  padding-block: 104px;
+  padding-block: 82px;
   scroll-margin-top: 82px;
 }
 
@@ -57,8 +57,9 @@ body {
   gap: 9px;
   min-height: 37px;
   padding: 6px 24px;
-  color: #f5eee4;
-  background: #282521;
+  border-bottom: 1px solid #e8dfd3;
+  color: #51463b;
+  background: #f6f1e8;
   font-size: 11px;
   letter-spacing: 0.015em;
 }
@@ -68,8 +69,8 @@ body {
   height: 7px;
   flex: 0 0 7px;
   border-radius: 50%;
-  background: var(--mawa-gold);
-  box-shadow: 0 0 0 4px #caa57523;
+  background: #25d366;
+  box-shadow: 0 0 0 4px #25d3662b;
 }
 
 .mawa-announcement button {
@@ -78,7 +79,7 @@ body {
   gap: 3px;
   padding: 0;
   border: 0;
-  color: #e0c091;
+  color: #8b5937;
   background: none;
   font-size: inherit;
   font-weight: 700;
@@ -332,118 +333,188 @@ body {
 
 .mawa-hero__visual {
   position: relative;
-  min-height: 446px;
+  min-height: 500px;
   margin-right: 19px;
-  border-radius: 12px 12px 12px 90px;
-  background: #c5d5e0;
-  box-shadow: 0 28px 65px rgb(54 45 35 / 13%);
+  overflow: hidden;
+  border: 1px solid #e4d7c6;
+  border-radius: 18px;
+  background: #f9f5ee;
+  box-shadow: 0 28px 65px rgb(54 45 35 / 12%);
 }
 
-.mawa-hero__image,
-.mawa-hero__image-shade {
+.mawa-hero__slides {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  display: flex;
+  transition: transform 700ms cubic-bezier(0.22, 0.68, 0, 1);
 }
 
-.mawa-hero__image {
-  background-image: url("/mawa-technician-ceiling-clean.jpeg");
-  background-position: center 45%;
-  background-size: cover;
+.mawa-hero__poster-slide {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex: 0 0 100%;
+  flex-direction: column;
+  padding: 27px 26px 23px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 93% 5%, rgb(212 183 146 / 31%), transparent 32%),
+    linear-gradient(145deg, #fcfaf6 0%, #f5efe5 100%);
 }
 
-.mawa-hero__image-shade {
-  background: linear-gradient(180deg, rgb(35 31 25 / 4%) 50%, rgb(35 31 25 / 73%) 100%);
-}
-
-.mawa-hero__image-caption {
+.mawa-hero__poster-slide::before {
   position: absolute;
-  right: 23px;
-  bottom: 23px;
-  left: 23px;
+  z-index: -1;
+  right: -52px;
+  bottom: -96px;
+  width: 225px;
+  height: 225px;
+  border: 1px solid rgb(168 110 67 / 15%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 19px rgb(168 110 67 / 4%), 0 0 0 38px rgb(168 110 67 / 3%);
+  content: "";
+}
+
+.mawa-hero__poster-slide--photo {
+  justify-content: flex-end;
+  padding: 24px;
+  background: #282521;
+}
+
+.mawa-hero__poster-slide--photo::before {
+  z-index: 1;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgb(40 37 33 / 2%) 35%, rgb(40 37 33 / 82%) 100%);
+  box-shadow: none;
+}
+
+.mawa-hero__photo-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.mawa-hero__photo-caption {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
   color: #fff;
 }
 
-.mawa-caption-icon {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  place-items: center;
-  border: 1px solid rgb(255 255 255 / 28%);
-  border-radius: 50%;
-  color: #fff;
-  background: rgb(255 255 255 / 16%);
-  backdrop-filter: blur(8px);
-}
-
-.mawa-hero__image-caption > span:nth-child(2) {
+.mawa-hero__photo-caption > span:last-child {
   display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+.mawa-hero__photo-caption strong {
+  font-size: 13px;
+}
+
+.mawa-hero__photo-caption small {
+  color: rgb(255 255 255 / 78%);
+  font-size: 10px;
+}
+
+.mawa-hero__poster-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 17px;
+  padding-right: 90px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgb(168 110 67 / 17%);
+}
+
+.mawa-hero__poster-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg, #bc8659, #895532);
+  box-shadow: 0 6px 14px rgb(115 72 40 / 20%);
+}
+
+.mawa-hero__poster-brand > span:last-child {
+  display: flex;
+  min-width: 0;
   flex: 1;
   flex-direction: column;
   line-height: 1.5;
 }
 
-.mawa-hero__image-caption strong {
-  font-size: 13px;
-}
-
-.mawa-hero__image-caption small {
-  color: rgb(255 255 255 / 78%);
+.mawa-hero__poster-brand strong {
+  overflow: hidden;
+  color: #302c27;
   font-size: 10px;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.mawa-hero__floating-card {
-  position: absolute;
-  top: 34px;
-  left: -44px;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 13px 18px 13px 13px;
-  border: 1px solid rgb(226 233 241 / 82%);
-  border-radius: 9px;
-  background: #fff;
-  box-shadow: 0 15px 40px rgb(45 38 29 / 11%);
-}
-
-.mawa-floating-card__icon {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  place-items: center;
-  border-radius: 8px;
-  color: #118b61;
-  background: #e9f7f0;
-}
-
-.mawa-hero__floating-card > span:last-child {
-  display: flex;
-  flex-direction: column;
-}
-
-.mawa-hero__floating-card strong {
-  font-size: 11px;
-}
-
-.mawa-hero__floating-card small {
-  color: #718094;
+.mawa-hero__poster-brand small {
+  color: #796f62;
   font-size: 9px;
 }
 
-.mawa-hero__vertical-label {
+.mawa-hero__carousel-controls {
   position: absolute;
-  right: -37px;
-  top: 57px;
-  color: #74849a;
+  z-index: 2;
+  top: 28px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #e8dfd3;
+  border-radius: 999px;
+  color: #63584c;
+  background: #faf8f4;
+}
+
+.mawa-hero__carousel-controls button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: transparent;
+  transition: background 160ms ease;
+}
+
+.mawa-hero__carousel-controls button:hover,
+.mawa-hero__carousel-controls button:focus-visible {
+  background: #efe7db;
+}
+
+.mawa-hero__carousel-controls span {
+  min-width: 35px;
+  color: #766b5d;
   font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  writing-mode: vertical-rl;
+  text-align: center;
 }
 
 .mawa-hero__scroll {
@@ -617,7 +688,7 @@ body {
 
 .mawa-section-heading {
   max-width: 630px;
-  margin: 0 auto 43px;
+  margin: 0 auto 36px;
 }
 
 .mawa-section-heading--left {
@@ -801,29 +872,120 @@ body {
   background: #fff;
 }
 
-.mawa-pricing__grid {
+.mawa-pricing__cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .mawa-pricing-card {
   padding: 24px;
-  border: 1px solid #e8dfd3;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 12px 30px rgb(45 38 29 / 5%);
+  border: 1px solid #eee5da;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #fff 0%, #fdfbf8 100%);
+  box-shadow: 0 14px 34px rgb(74 54 34 / 7%);
+}
+
+.mawa-pricing-card__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.mawa-pricing-card__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border: 1px solid #eadbca;
+  border-radius: 13px;
+  color: #9c663e;
+  background: linear-gradient(145deg, #fbf5eb, #f3e8d8);
+}
+
+.mawa-pricing-card__heading h3 {
+  margin: 4px 0 0;
+  color: #302c27;
+  font-size: 22px;
+  font-weight: 740;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 17px 19px;
+  border-color: #e4cdb2;
+  border-radius: 15px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(185 133 83 / 14%), transparent 42%),
+    linear-gradient(145deg, #fff8ed 0%, #f2e2cf 100%);
+  box-shadow: 0 15px 35px rgb(100 68 39 / 12%);
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__heading {
+  margin-bottom: 13px;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__heading h3 {
+  font-size: 21px;
+}
+
+.mawa-hero__poster-slide .mawa-price-list {
+  gap: 7px;
+}
+
+.mawa-hero__poster-slide .mawa-price-list li {
+  padding: 7px 10px;
+}
+
+.mawa-hero__poster-slide .mawa-price-list li,
+.mawa-hero__poster-slide .mawa-price-list strong {
+  font-size: 11px;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__note {
+  font-size: 9px;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__note:not(.mawa-pricing-card__note--group) {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #eee6dc;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__extras {
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__extras span {
+  padding: 4px 6px;
+  font-size: 8px;
 }
 
 .mawa-pricing-card__eyebrow {
-  color: #a86e43;
+  display: inline-block;
+  color: #9a6037;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
-.mawa-pricing-card h3,
 .mawa-pricing__details h3 {
   margin: 8px 0 14px;
   color: #302c27;
@@ -833,7 +995,7 @@ body {
 
 .mawa-price-list {
   display: grid;
-  gap: 0;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -844,20 +1006,24 @@ body {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid #f0ebe4;
-  color: #645b50;
+  padding: 10px 12px;
+  border: 1px solid #f0e9df;
+  border-radius: 9px;
+  color: #62594e;
+  background: #fff;
   font-size: 12px;
-}
-
-.mawa-price-list li:last-child {
-  border-bottom: 0;
 }
 
 .mawa-price-list strong {
   flex: 0 0 auto;
-  color: #302c27;
-  font-size: 12px;
+  padding: 3px 9px;
+  border: 1px solid #ecddcb;
+  border-radius: 999px;
+  color: #7e4f2e;
+  background: #f8f1e8;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
 }
 
 .mawa-pricing-card__note {
@@ -867,10 +1033,6 @@ body {
   line-height: 1.7;
 }
 
-.mawa-pricing-card--installation {
-  grid-column: 1 / -1;
-}
-
 .mawa-pricing-card__columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -878,9 +1040,13 @@ body {
 }
 
 .mawa-pricing-card__columns h4 {
-  margin: 4px 0 2px;
-  color: #51483d;
+  margin: 0 0 9px;
+  color: #493d31;
   font-size: 12px;
+}
+
+.mawa-pricing-card__note--group {
+  margin-top: 9px;
 }
 
 .mawa-pricing-card__extras {
@@ -1221,6 +1387,60 @@ body {
   background: #e8f7ef;
 }
 
+.mawa-contact__website-qr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 13px;
+  padding: 13px;
+  border: 1px solid #e8dfd3;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mawa-contact__website-qr img {
+  display: block;
+  width: 104px;
+  height: 104px;
+  flex: 0 0 104px;
+  padding: 5px;
+  border: 1px solid #eee7de;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.mawa-contact__website-qr > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mawa-contact__website-qr strong {
+  color: #38332c;
+  font-size: 11px;
+}
+
+.mawa-contact__website-qr p {
+  margin: 3px 0 7px;
+  color: #766e63;
+  font-size: 9px;
+}
+
+.mawa-contact__website-qr a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  color: #8b5937;
+  font-size: 9px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.mawa-contact__website-qr a:hover {
+  color: #633d24;
+}
+
 .mawa-contact__whatsapp > span:nth-child(2) {
   display: flex;
   flex: 1;
@@ -1542,104 +1762,6 @@ body {
   background: #128d55;
 }
 
-.mawa-price-toast {
-  position: fixed;
-  z-index: 29;
-  bottom: 94px;
-  left: 24px;
-  display: flex;
-  width: min(280px, calc(100vw - 32px));
-  flex-direction: column;
-  padding: 14px 16px 13px;
-  border: 1px solid rgb(222 210 194 / 76%);
-  border-radius: 12px;
-  color: #302c27;
-  background: rgb(255 253 249 / 94%);
-  box-shadow: 0 12px 34px rgb(45 38 29 / 14%);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(9px);
-  transition: opacity 240ms ease, transform 240ms ease, visibility 240ms ease;
-  visibility: hidden;
-  backdrop-filter: blur(14px);
-}
-
-.mawa-price-toast--visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-  visibility: visible;
-}
-
-.mawa-price-toast__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.mawa-price-toast__top > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: #8c603d;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.mawa-price-toast__top button {
-  display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  color: #756b5e;
-  background: transparent;
-}
-
-.mawa-price-toast__top button:hover {
-  background: #f1ebe2;
-}
-
-.mawa-price-toast__category {
-  font-size: 13px;
-}
-
-.mawa-price-toast__item {
-  color: #746b60;
-  font-size: 10px;
-}
-
-.mawa-price-toast__price {
-  margin-top: 1px;
-  color: #94613b;
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.35;
-}
-
-.mawa-price-toast__link {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  gap: 4px;
-  margin-top: 6px;
-  padding: 0;
-  border: 0;
-  color: #645546;
-  background: transparent;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.mawa-price-toast__link:hover {
-  color: #a86e43;
-}
-
 .mawa-showcase {
   background: linear-gradient(180deg, #fff 0%, #f6f0e9 100%);
 }
@@ -1713,7 +1835,7 @@ body {
   }
 
   .mawa-hero__visual {
-    min-height: 405px;
+    min-height: 460px;
   }
 
   .mawa-about__grid,
@@ -1737,7 +1859,7 @@ body {
   }
 
   .mawa-section {
-    padding-block: 74px;
+    padding-block: 60px;
   }
 
   .mawa-header__inner {
@@ -1916,21 +2038,58 @@ body {
   }
 
   .mawa-hero__visual {
-    min-height: min(80vw, 410px);
+    min-height: min(145vw, 540px);
     margin: 0 10px 0 18px;
-    border-radius: 10px 10px 10px 57px;
+    border-radius: 10px;
   }
 
-  .mawa-hero__floating-card {
-    top: 22px;
-    left: -18px;
-    padding: 10px 12px 10px 10px;
+  .mawa-hero__poster-slide {
+    padding: 20px 17px 17px;
   }
 
-  .mawa-hero__vertical-label {
-    right: -21px;
-    top: 43px;
-    font-size: 7px;
+  .mawa-hero__poster-brand {
+    margin-bottom: 13px;
+    padding-bottom: 10px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card {
+    padding: 15px 14px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__heading {
+    margin-bottom: 10px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__note:not(.mawa-pricing-card__note--group) {
+    margin-top: 14px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__heading h3 {
+    font-size: 18px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__icon {
+    width: 35px;
+    height: 35px;
+    flex-basis: 35px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mawa-hero__poster-slide .mawa-pricing-card__columns h4 {
+    font-size: 10px;
+  }
+
+  .mawa-hero__poster-slide .mawa-price-list li,
+  .mawa-hero__poster-slide .mawa-price-list strong {
+    font-size: 9px;
+  }
+
+  .mawa-hero__poster-slide .mawa-price-list li {
+    padding-block: 4px;
   }
 
   .mawa-hero__scroll {
@@ -1971,7 +2130,7 @@ body {
   }
 
   .mawa-section-heading {
-    margin-bottom: 30px;
+    margin-bottom: 26px;
   }
 
   .mawa-section-heading h2 {
@@ -1987,12 +2146,8 @@ body {
     gap: 11px;
   }
 
-  .mawa-pricing__grid {
+  .mawa-pricing__cards {
     grid-template-columns: 1fr;
-  }
-
-  .mawa-pricing-card--installation {
-    grid-column: auto;
   }
 
   .mawa-pricing-card__columns,
@@ -2182,12 +2337,6 @@ body {
     padding: 0;
   }
 
-  .mawa-price-toast {
-    bottom: 79px;
-    left: 15px;
-    width: min(270px, calc(100vw - 30px));
-  }
-
   .mawa-whatsapp-float span {
     position: absolute;
     width: 1px;
@@ -2195,6 +2344,12 @@ body {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mawa-hero__slides {
+    transition: none;
   }
 }
 
@@ -2209,6 +2364,29 @@ body {
 
   .mawa-hero h1 {
     font-size: 45px;
+  }
+
+  .mawa-hero__visual {
+    min-height: min(145vw, 520px);
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .mawa-hero__poster-slide {
+    padding: 18px 13px 15px;
+  }
+
+  .mawa-hero__poster-brand {
+    padding-right: 78px;
+  }
+
+  .mawa-hero__poster-brand strong {
+    font-size: 9px;
+  }
+
+  .mawa-hero__carousel-controls {
+    top: 22px;
+    right: 10px;
   }
 
   .mawa-hero__actions {
@@ -2228,6 +2406,29 @@ body {
   .mawa-service-card__icon {
     width: 38px;
     height: 38px;
+  }
+}
+
+@media (max-width: 340px) {
+  .mawa-hero h1 {
+    font-size: 39px;
+  }
+
+  .mawa-hero__visual {
+    min-height: 610px;
+  }
+
+  .mawa-hero__actions {
+    gap: 8px;
+  }
+
+  .mawa-hero__actions .mawa-button {
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  .mawa-text-link {
+    font-size: 10px;
   }
 }
 

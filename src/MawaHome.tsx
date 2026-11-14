@@ -6,8 +6,11 @@ import {
   BadgeCheck,
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Clock3,
   Droplets,
+  Download,
   Fan,
   House,
   Mail,
@@ -146,15 +149,6 @@ const workPhotos = [
   },
 ]
 
-const priceHighlights = [
-  { category: 'General service', item: 'Wall-mounted AC', price: 'RM 60' },
-  { category: 'Chemical service', item: 'Wall-mounted AC · any HP', price: 'RM 130' },
-  { category: 'Chemical service', item: 'Ceiling cassette · any HP', price: 'RM 180' },
-  { category: 'Overhaul service', item: 'Wall-mounted AC', price: 'RM 200' },
-  { category: 'Installation package', item: 'Wall-mounted · 1.0 HP', price: 'RM 210' },
-  { category: 'Installation package', item: 'Ceiling cassette · 1.5 HP', price: 'RM 280' },
-]
-
 const generalServicePrices = [
   { item: 'Wall-mounted', price: 'RM 60' },
   { item: 'Ceiling cassette', price: 'RM 130' },
@@ -191,6 +185,73 @@ const cassetteInstallationPrices = [
   { item: '3.5 HP', price: 'RM 420' },
 ]
 
+type PricingSlide = {
+  eyebrow: string
+  title: string
+  icon: LucideIcon
+  groups: { title?: string; items: { item: string; price: string }[]; note?: string }[]
+  extras?: string[]
+  note?: string
+}
+
+type HeroSlide =
+  | { type: 'photo'; src: string; alt: string; title: string }
+  | { type: 'service'; slide: PricingSlide }
+
+const pricingSlides: PricingSlide[] = [
+  {
+    eyebrow: '01 · Routine care',
+    title: 'General service',
+    icon: Sparkles,
+    groups: [{ items: generalServicePrices }],
+    note: "Gas refill surcharge may apply depending on the unit's existing gas volume.",
+  },
+  {
+    eyebrow: '02 · Deep clean',
+    title: 'Chemical service',
+    icon: Droplets,
+    groups: [{ items: chemicalServicePrices }],
+    note: 'Wall-mounted and ceiling cassette prices are per unit, regardless of HP.',
+  },
+  {
+    eyebrow: '03 · Full clean',
+    title: 'Overhaul service',
+    icon: Wrench,
+    groups: [{ items: overhaulServicePrices }],
+    note: 'Includes a free 20 psi gas top-up. Any additional gas requirement will be discussed before work proceeds.',
+  },
+  {
+    eyebrow: '04 · Supply & install',
+    title: 'Installation packages',
+    icon: Wind,
+    groups: [
+      {
+        title: 'Wall-mounted',
+        items: wallInstallationPrices,
+        note: 'Includes 6 ft copper, 6 ft wire, 6 ft insulation and 10 ft drain pipe.',
+      },
+      { title: 'Ceiling cassette', items: cassetteInstallationPrices },
+    ],
+    extras: [
+      'Extra length beyond 6 ft: RM 22 / ft',
+      'Above 3.0 HP: RM 25 / ft',
+      'Copper casing supply & install: RM 11 / ft',
+      'Cable tray supply & install: RM 22 / ft',
+    ],
+    note: '30-day workmanship warranty for installation.',
+  },
+]
+
+const heroSlides: HeroSlide[] = [
+  {
+    type: 'photo',
+    src: '/mawa-featured-technician.jpeg',
+    alt: 'MAWA technician carefully preparing an air-conditioning installation',
+    title: 'Careful AC installation',
+  },
+  ...pricingSlides.map((slide) => ({ type: 'service' as const, slide })),
+]
+
 const WHATSAPP_NUMBER = '60173132571'
 const PHONE_NUMBER = '+60173132571'
 const DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
@@ -212,6 +273,20 @@ function Logo({ light = false }: { light?: boolean }) {
     >
       <img className="mawa-logo__image" src="/mawa-logo.png" alt="MAWA Air Cond Service — Cool Comfort, Reliable Service" />
     </a>
+  )
+}
+
+function WhatsAppIcon({ size = 24 }: { size?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.064 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.626.711.226 1.358.194 1.87.118.571-.085 1.758-.718 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.234c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c-.01 5.45-4.45 9.89-9.9 9.89m8.41-18.29A11.815 11.815 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.15 1.59 5.96L0 24l6.3-1.65a11.87 11.87 0 0 0 5.74 1.47h.01c6.55 0 11.89-5.34 11.9-11.89a11.83 11.83 0 0 0-3.49-8.43" />
+    </svg>
   )
 }
 
@@ -245,6 +320,42 @@ function PriceList({ items }: { items: { item: string; price: string }[] }) {
         </li>
       ))}
     </ul>
+  )
+}
+
+function PricingServiceCard({ slide }: { slide: PricingSlide }) {
+  const groupedPrices = slide.groups.length > 1
+  const Icon = slide.icon
+
+  return (
+    <article className="mawa-pricing-card">
+      <div className="mawa-pricing-card__heading">
+        <div>
+          <span className="mawa-pricing-card__eyebrow">{slide.eyebrow}</span>
+          <h3>{slide.title}</h3>
+        </div>
+        <span className="mawa-pricing-card__icon"><Icon size={20} strokeWidth={1.8} /></span>
+      </div>
+      {groupedPrices ? (
+        <div className="mawa-pricing-card__columns">
+          {slide.groups.map(({ title, items, note }) => (
+            <div key={title}>
+              <h4>{title}</h4>
+              <PriceList items={items} />
+              {note && <p className="mawa-pricing-card__note mawa-pricing-card__note--group">{note}</p>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <PriceList items={slide.groups[0].items} />
+      )}
+      {slide.extras && (
+        <div className="mawa-pricing-card__extras">
+          {slide.extras.map((extra) => <span key={extra}>{extra}</span>)}
+        </div>
+      )}
+      {slide.note && <p className="mawa-pricing-card__note">{slide.note}</p>}
+    </article>
   )
 }
 
@@ -328,34 +439,19 @@ export default function MawaHome() {
   const [selectedService, setSelectedService] = useState('')
   const [customerName, setCustomerName] = useState('')
   const [customerMessage, setCustomerMessage] = useState('')
-  const [quickPriceIndex, setQuickPriceIndex] = useState(0)
-  const [quickPriceVisible, setQuickPriceVisible] = useState(false)
-  const [quickPriceDismissed, setQuickPriceDismissed] = useState(false)
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0)
 
   useEffect(() => {
-    if (quickPriceDismissed) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return
     }
 
-    let hideTimeout: number | undefined
-    const showPrice = () => {
-      setQuickPriceVisible(true)
-      window.clearTimeout(hideTimeout)
-      hideTimeout = window.setTimeout(() => setQuickPriceVisible(false), 8500)
-    }
-
-    const firstDisplay = window.setTimeout(showPrice, 6500)
     const rotation = window.setInterval(() => {
-      setQuickPriceIndex((index) => (index + 1) % priceHighlights.length)
-      showPrice()
-    }, 35000)
+      setHeroSlideIndex((index) => (index + 1) % heroSlides.length)
+    }, 6000)
 
-    return () => {
-      window.clearTimeout(firstDisplay)
-      window.clearInterval(rotation)
-      window.clearTimeout(hideTimeout)
-    }
-  }, [quickPriceDismissed])
+    return () => window.clearInterval(rotation)
+  }, [])
 
   const visitSection = (section: string) => {
     setMenuOpen(false)
@@ -380,7 +476,7 @@ export default function MawaHome() {
     <main className="mawa-site">
       <div className="mawa-announcement">
         <span className="mawa-announcement__dot" />
-        <span>Comfort starts with a conversation.</span>
+        <span>Online 24 hours</span>
         <button type="button" onClick={() => visitSection('contact')}>
           Talk to our team <ArrowUpRight size={14} />
         </button>
@@ -477,22 +573,75 @@ export default function MawaHome() {
             </div>
           </div>
 
-          <div className="mawa-hero__visual">
-            <div className="mawa-hero__image" role="img" aria-label="Air conditioning technician at work" />
-            <div className="mawa-hero__image-shade" />
-            <div className="mawa-hero__image-caption">
-              <span className="mawa-caption-icon"><Wind size={19} /></span>
-              <span>
-                <strong>Feel the difference</strong>
-                <small>Comfort, taken care of</small>
+          <div
+            className="mawa-hero__visual"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="MAWA price reference and service posters"
+          >
+            <div
+              className="mawa-hero__slides"
+              style={{ transform: `translateX(-${heroSlideIndex * 100}%)` }}
+            >
+              {heroSlides.map((slide, index) =>
+                slide.type === 'photo' ? (
+                  <div
+                    className="mawa-hero__poster-slide mawa-hero__poster-slide--photo"
+                    aria-hidden={index !== heroSlideIndex}
+                    aria-label={`${slide.title}, MAWA work photo, slide ${index + 1} of ${heroSlides.length}`}
+                    key={slide.src}
+                  >
+                    <img
+                      className="mawa-hero__photo-image"
+                      src={slide.src}
+                      alt={index === heroSlideIndex ? slide.alt : ''}
+                    />
+                    <div className="mawa-hero__photo-caption">
+                      <span className="mawa-hero__poster-mark"><Wind size={20} /></span>
+                      <span>
+                        <strong>{slide.title}</strong>
+                        <small>Careful work by the MAWA team</small>
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <article
+                    className="mawa-hero__poster-slide"
+                    aria-hidden={index !== heroSlideIndex}
+                    aria-label={`${slide.slide.title}, service poster ${index + 1} of ${heroSlides.length}`}
+                    key={slide.slide.title}
+                  >
+                    <div className="mawa-hero__poster-brand">
+                      <span className="mawa-hero__poster-mark"><Snowflake size={20} /></span>
+                      <span>
+                        <strong>MAWA AIR COND SERVICE</strong>
+                        <small>Kuala Lumpur · Malaysia</small>
+                      </span>
+                    </div>
+                    <PricingServiceCard slide={slide.slide} />
+                  </article>
+                ),
+              )}
+            </div>
+            <div className="mawa-hero__carousel-controls">
+              <button
+                type="button"
+                aria-label="Previous price slide"
+                onClick={() => setHeroSlideIndex((index) => (index - 1 + heroSlides.length) % heroSlides.length)}
+              >
+                <ChevronLeft size={17} />
+              </button>
+              <span aria-live="off">
+                {String(heroSlideIndex + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
               </span>
-              <ArrowUpRight size={19} />
+              <button
+                type="button"
+                aria-label="Next price slide"
+                onClick={() => setHeroSlideIndex((index) => (index + 1) % heroSlides.length)}
+              >
+                <ChevronRight size={17} />
+              </button>
             </div>
-            <div className="mawa-hero__floating-card">
-              <span className="mawa-floating-card__icon"><Check size={17} /></span>
-              <span><strong>All makes & models</strong><small>One team for every season</small></span>
-            </div>
-            <div className="mawa-hero__vertical-label">MAWA · CLIMATE CARE</div>
           </div>
           <div className="mawa-hero__scroll" aria-hidden="true">
             <span />
@@ -614,50 +763,10 @@ export default function MawaHome() {
             description="Straightforward starting prices for our most requested services. If anything needs extra parts or work, we will discuss the cost with you first."
           />
 
-          <div className="mawa-pricing__grid">
-            <article className="mawa-pricing-card">
-              <span className="mawa-pricing-card__eyebrow">01 · Routine care</span>
-              <h3>General service</h3>
-              <PriceList items={generalServicePrices} />
-              <p className="mawa-pricing-card__note">Gas refill surcharge may apply depending on the unit's existing gas volume.</p>
-            </article>
-
-            <article className="mawa-pricing-card">
-              <span className="mawa-pricing-card__eyebrow">02 · Deep clean</span>
-              <h3>Chemical service</h3>
-              <PriceList items={chemicalServicePrices} />
-              <p className="mawa-pricing-card__note">Wall-mounted and ceiling cassette prices are per unit, regardless of HP.</p>
-            </article>
-
-            <article className="mawa-pricing-card">
-              <span className="mawa-pricing-card__eyebrow">03 · Full clean</span>
-              <h3>Overhaul service</h3>
-              <PriceList items={overhaulServicePrices} />
-              <p className="mawa-pricing-card__note">Includes a free 20 psi gas top-up. Any additional gas requirement will be discussed before work proceeds.</p>
-            </article>
-
-            <article className="mawa-pricing-card mawa-pricing-card--installation">
-              <span className="mawa-pricing-card__eyebrow">04 · Supply & install</span>
-              <h3>Installation packages</h3>
-              <div className="mawa-pricing-card__columns">
-                <div>
-                  <h4>Wall-mounted</h4>
-                  <PriceList items={wallInstallationPrices} />
-                  <p className="mawa-pricing-card__note">Includes 6 ft copper, 6 ft wire, 6 ft insulation and 10 ft drain pipe.</p>
-                </div>
-                <div>
-                  <h4>Ceiling cassette</h4>
-                  <PriceList items={cassetteInstallationPrices} />
-                </div>
-              </div>
-              <div className="mawa-pricing-card__extras">
-                <span>Extra length beyond 6 ft: RM 22 / ft</span>
-                <span>Above 3.0 HP: RM 25 / ft</span>
-                <span>Copper supply & install: RM 11 / ft</span>
-                <span>Cable tray supply & install: RM 22 / ft</span>
-              </div>
-              <p className="mawa-pricing-card__note">30-day workmanship warranty for installation.</p>
-            </article>
+          <div className="mawa-pricing__cards">
+            {pricingSlides.map((slide) => (
+              <PricingServiceCard slide={slide} key={slide.title} />
+            ))}
           </div>
 
           <div className="mawa-pricing__details">
@@ -776,10 +885,23 @@ export default function MawaHome() {
               target="_blank"
               rel="noreferrer"
             >
-              <span className="mawa-contact__whatsapp-icon"><MessageCircle size={19} /></span>
+              <span className="mawa-contact__whatsapp-icon"><WhatsAppIcon size={20} /></span>
               <span><strong>Message MAWA on WhatsApp</strong><small>We’re happy to help you get started</small></span>
               <ArrowUpRight size={18} />
             </a>
+            <div className="mawa-contact__website-qr">
+              <img src="/mawa-website-qr.png" alt="QR code linking to the MAWA website" />
+              <div>
+                <strong>Visit our website</strong>
+                <p>Scan the code to explore MAWA services and prices.</p>
+                <a href="/mawa-website-qr.png" download>
+                  <Download size={14} /> Download QR image
+                </a>
+                <a href="/mawa-website-qr.pdf" download>
+                  <Download size={14} /> Printable QR poster (PDF)
+                </a>
+              </div>
+            </div>
             <div className="mawa-contact__location">
               <MapPin size={17} />
               <span><strong>Kuala Lumpur, Malaysia</strong><small>Serving homes and businesses in the area</small></span>
@@ -887,34 +1009,10 @@ export default function MawaHome() {
         rel="noreferrer"
         aria-label={`Message MAWA on WhatsApp at ${DISPLAY_PHONE_NUMBER}`}
       >
-        <MessageCircle size={24} />
+        <WhatsAppIcon size={25} />
         <span>Chat with us</span>
       </a>
 
-      <aside
-        className={`mawa-price-toast${quickPriceVisible ? ' mawa-price-toast--visible' : ''}`}
-        aria-hidden={!quickPriceVisible}
-      >
-        <div className="mawa-price-toast__top">
-          <span><Sparkles size={14} /> Quick price</span>
-          <button
-            type="button"
-            aria-label="Dismiss price highlight"
-            onClick={() => {
-              setQuickPriceDismissed(true)
-              setQuickPriceVisible(false)
-            }}
-          >
-            <X size={15} />
-          </button>
-        </div>
-        <strong className="mawa-price-toast__category">{priceHighlights[quickPriceIndex].category}</strong>
-        <span className="mawa-price-toast__item">{priceHighlights[quickPriceIndex].item}</span>
-        <span className="mawa-price-toast__price">{priceHighlights[quickPriceIndex].price}</span>
-        <button className="mawa-price-toast__link" type="button" onClick={() => visitSection('pricing')}>
-          View all prices <ArrowUpRight size={14} />
-        </button>
-      </aside>
     </main>
   )
 }
