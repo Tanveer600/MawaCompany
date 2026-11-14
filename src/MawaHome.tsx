@@ -189,6 +189,7 @@ type PricingSlide = {
   eyebrow: string
   title: string
   icon: LucideIcon
+  background: string
   groups: { title?: string; items: { item: string; price: string }[]; note?: string }[]
   extras?: string[]
   note?: string
@@ -203,6 +204,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '01 · Routine care',
     title: 'General service',
     icon: Sparkles,
+    background: workPhotos[1].src,
     groups: [{ items: generalServicePrices }],
     note: "Gas refill surcharge may apply depending on the unit's existing gas volume.",
   },
@@ -210,6 +212,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '02 · Deep clean',
     title: 'Chemical service',
     icon: Droplets,
+    background: workPhotos[2].src,
     groups: [{ items: chemicalServicePrices }],
     note: 'Wall-mounted and ceiling cassette prices are per unit, regardless of HP.',
   },
@@ -217,6 +220,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '03 · Full clean',
     title: 'Overhaul service',
     icon: Wrench,
+    background: workPhotos[3].src,
     groups: [{ items: overhaulServicePrices }],
     note: 'Includes a free 20 psi gas top-up. Any additional gas requirement will be discussed before work proceeds.',
   },
@@ -224,6 +228,7 @@ const pricingSlides: PricingSlide[] = [
     eyebrow: '04 · Supply & install',
     title: 'Installation packages',
     icon: Wind,
+    background: workPhotos[4].src,
     groups: [
       {
         title: 'Wall-mounted',
@@ -334,7 +339,7 @@ function PricingServiceCard({ slide }: { slide: PricingSlide }) {
           <span className="mawa-pricing-card__eyebrow">{slide.eyebrow}</span>
           <h3>{slide.title}</h3>
         </div>
-        <span className="mawa-pricing-card__icon"><Icon size={20} strokeWidth={1.8} /></span>
+        <span className="mawa-pricing-card__icon"><Icon size={24} strokeWidth={1.8} /></span>
       </div>
       {groupedPrices ? (
         <div className="mawa-pricing-card__columns">
@@ -577,7 +582,7 @@ export default function MawaHome() {
             className="mawa-hero__visual"
             role="region"
             aria-roledescription="carousel"
-            aria-label="MAWA price reference and service posters"
+            aria-label="MAWA work photo and service-price posters"
           >
             <div
               className="mawa-hero__slides"
@@ -606,18 +611,12 @@ export default function MawaHome() {
                   </div>
                 ) : (
                   <article
-                    className="mawa-hero__poster-slide"
+                    className="mawa-hero__poster-slide mawa-hero__poster-slide--service"
                     aria-hidden={index !== heroSlideIndex}
                     aria-label={`${slide.slide.title}, service poster ${index + 1} of ${heroSlides.length}`}
                     key={slide.slide.title}
                   >
-                    <div className="mawa-hero__poster-brand">
-                      <span className="mawa-hero__poster-mark"><Snowflake size={20} /></span>
-                      <span>
-                        <strong>MAWA AIR COND SERVICE</strong>
-                        <small>Kuala Lumpur · Malaysia</small>
-                      </span>
-                    </div>
+                    <img className="mawa-hero__poster-background" src={slide.slide.background} alt="" aria-hidden="true" />
                     <PricingServiceCard slide={slide.slide} />
                   </article>
                 ),

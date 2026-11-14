@@ -383,6 +383,34 @@ body {
   background: #282521;
 }
 
+.mawa-hero__poster-slide--service {
+  justify-content: center;
+  padding: 58px 24px 22px;
+  background: #282521;
+}
+
+.mawa-hero__poster-slide--service::before {
+  z-index: 1;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgb(19 17 15 / 72%), rgb(19 17 15 / 56%) 72%, rgb(19 17 15 / 20%));
+  box-shadow: none;
+}
+
+.mawa-hero__poster-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .mawa-hero__poster-slide--photo::before {
   z-index: 1;
   inset: 0;
@@ -429,18 +457,6 @@ body {
   font-size: 10px;
 }
 
-.mawa-hero__poster-brand {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 17px;
-  padding-right: 90px;
-  padding-bottom: 13px;
-  border-bottom: 1px solid rgb(168 110 67 / 17%);
-}
-
 .mawa-hero__poster-mark {
   display: grid;
   width: 38px;
@@ -452,28 +468,6 @@ body {
   color: #fff;
   background: linear-gradient(145deg, #bc8659, #895532);
   box-shadow: 0 6px 14px rgb(115 72 40 / 20%);
-}
-
-.mawa-hero__poster-brand > span:last-child {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  flex-direction: column;
-  line-height: 1.5;
-}
-
-.mawa-hero__poster-brand strong {
-  overflow: hidden;
-  color: #302c27;
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mawa-hero__poster-brand small {
-  color: #796f62;
-  font-size: 9px;
 }
 
 .mawa-hero__carousel-controls {
@@ -917,7 +911,7 @@ body {
 
 .mawa-hero__poster-slide .mawa-pricing-card {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -930,6 +924,18 @@ body {
   box-shadow: 0 15px 35px rgb(100 68 39 / 12%);
 }
 
+.mawa-hero__poster-slide--service .mawa-pricing-card {
+  flex: 0 1 auto;
+  align-self: flex-start;
+  width: min(460px, 100%);
+  padding: 4px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 .mawa-hero__poster-slide .mawa-pricing-card__heading {
   margin-bottom: 13px;
 }
@@ -938,18 +944,35 @@ body {
   width: 40px;
   height: 40px;
   flex-basis: 40px;
+  border: 0;
+  color: #f0c397;
+  background: transparent;
 }
 
 .mawa-hero__poster-slide .mawa-pricing-card__heading h3 {
+  color: #fffaf3;
   font-size: 21px;
 }
 
+.mawa-hero__poster-slide .mawa-pricing-card__eyebrow {
+  color: #f0c397;
+}
+
+.mawa-hero__poster-slide .mawa-pricing-card__columns h4 {
+  color: #fffaf3;
+}
+
 .mawa-hero__poster-slide .mawa-price-list {
-  gap: 7px;
+  gap: 0;
 }
 
 .mawa-hero__poster-slide .mawa-price-list li {
-  padding: 7px 10px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgb(255 255 255 / 27%);
+  border-radius: 0;
+  color: rgb(255 255 255 / 88%);
+  background: transparent;
 }
 
 .mawa-hero__poster-slide .mawa-price-list li,
@@ -957,14 +980,27 @@ body {
   font-size: 11px;
 }
 
+.mawa-hero__poster-slide .mawa-price-list li > span {
+  color: #fffaf3;
+}
+
+.mawa-hero__poster-slide .mawa-price-list strong {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #f0c397;
+  background: transparent;
+}
+
 .mawa-hero__poster-slide .mawa-pricing-card__note {
+  color: rgb(255 250 243 / 72%);
   font-size: 9px;
 }
 
 .mawa-hero__poster-slide .mawa-pricing-card__note:not(.mawa-pricing-card__note--group) {
   margin-top: auto;
   padding-top: 12px;
-  border-top: 1px solid #eee6dc;
+  border-top: 1px solid rgb(255 255 255 / 24%);
 }
 
 .mawa-hero__poster-slide .mawa-pricing-card__extras {
@@ -973,7 +1009,10 @@ body {
 }
 
 .mawa-hero__poster-slide .mawa-pricing-card__extras span {
-  padding: 4px 6px;
+  padding: 0;
+  border: 0;
+  color: rgb(255 250 243 / 82%);
+  background: transparent;
   font-size: 8px;
 }
 
@@ -1012,6 +1051,12 @@ body {
   color: #62594e;
   background: #fff;
   font-size: 12px;
+  font-weight: 700;
+}
+
+.mawa-price-list li > span {
+  color: #514638;
+  font-weight: 700;
 }
 
 .mawa-price-list strong {
@@ -2047,13 +2092,16 @@ body {
     padding: 20px 17px 17px;
   }
 
-  .mawa-hero__poster-brand {
-    margin-bottom: 13px;
-    padding-bottom: 10px;
+  .mawa-hero__poster-slide--service {
+    padding: 56px 12px 12px;
   }
 
   .mawa-hero__poster-slide .mawa-pricing-card {
     padding: 15px 14px;
+  }
+
+  .mawa-hero__poster-slide--service .mawa-pricing-card {
+    padding: 0;
   }
 
   .mawa-hero__poster-slide .mawa-pricing-card__heading {
@@ -2089,7 +2137,13 @@ body {
   }
 
   .mawa-hero__poster-slide .mawa-price-list li {
-    padding-block: 4px;
+    gap: 5px;
+    padding: 4px 0;
+  }
+
+  .mawa-hero__poster-slide .mawa-price-list strong {
+    padding: 0;
+    font-size: 8px;
   }
 
   .mawa-hero__scroll {
@@ -2376,12 +2430,8 @@ body {
     padding: 18px 13px 15px;
   }
 
-  .mawa-hero__poster-brand {
-    padding-right: 78px;
-  }
-
-  .mawa-hero__poster-brand strong {
-    font-size: 9px;
+  .mawa-hero__poster-slide--service {
+    padding: 56px 9px 9px;
   }
 
   .mawa-hero__carousel-controls {
