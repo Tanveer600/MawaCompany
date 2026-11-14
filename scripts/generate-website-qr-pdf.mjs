@@ -5,7 +5,7 @@ import QRCode from 'qrcode'
 import { jsPDF } from 'jspdf'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const websiteUrl = 'https://mawacompanymilaisia.vercel.app/'
+const websiteUrl = 'https://mawa-company.vercel.app/'
 const qrOptions = {
   errorCorrectionLevel: 'Q',
   margin: 4,
@@ -61,7 +61,7 @@ pdf.addImage(qrDataUrl, 'PNG', 40, 85, 68, 68)
 pdf.setTextColor(54, 48, 41)
 pdf.setFont('helvetica', 'bold')
 pdf.setFontSize(9)
-pdf.text('mawacompanymilaisia.vercel.app', pageWidth / 2, 169, { align: 'center' })
+pdf.text('mawa-company.vercel.app', pageWidth / 2, 169, { align: 'center' })
 pdf.setFont('helvetica', 'normal')
 pdf.setFontSize(8)
 pdf.setTextColor(122, 108, 91)
