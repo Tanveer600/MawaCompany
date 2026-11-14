@@ -803,7 +803,7 @@ export default function MawaHome() {
             {services.map(({ title, description, icon: Icon }, index) => (
               <article className="mawa-service-card" key={title}>
                 <div className="mawa-service-card__top">
-                  <span className="mawa-service-card__icon"><Icon size={22} strokeWidth={1.8} /></span>
+                  <span className="mawa-service-card__icon"><Icon size={26} strokeWidth={2.4} /></span>
                   <span className="mawa-service-card__number">{String(index + 1).padStart(2, '0')}</span>
                 </div>
                 <h3>{title}</h3>
