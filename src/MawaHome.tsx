@@ -13,6 +13,7 @@ import {
   Download,
   Fan,
   House,
+  LoaderCircle,
   Mail,
   MapPin,
   Menu,
@@ -305,10 +306,15 @@ const heroSlides: HeroSlide[] = [
   ...serviceSpotlightSlides.map((slide) => ({ type: 'spotlight' as const, slide })),
 ]
 
-const WHATSAPP_NUMBER = '60173132571'
+const WHATSAPP_NUMBER = '60172854051'
 const PHONE_NUMBER = '+60173132571'
 const DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
+const WHATSAPP_DISPLAY_PHONE_NUMBER = '+60 17-285 4051'
 const CONTACT_EMAIL = 'mawaaircondservice@gmail.com'
+const BUSINESS_ADDRESS =
+  'SRI PENARA, JALAN SRI PENARA 1, BANDAR SRI PERMAISURI, 56000, WILAYAH PERSEKUTUAN KUALA LUMPUR'
+const GOOGLE_MAPS_URL =
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS_ADDRESS)}`
 
 const whatsappLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
@@ -509,6 +515,8 @@ export default function MawaHome() {
   const [customerName, setCustomerName] = useState('')
   const [customerMessage, setCustomerMessage] = useState('')
   const [heroSlideIndex, setHeroSlideIndex] = useState(0)
+  const [mapOpening, setMapOpening] = useState(false)
+  const mapOpeningTimeout = useRef<number | null>(null)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -521,6 +529,23 @@ export default function MawaHome() {
 
     return () => window.clearInterval(rotation)
   }, [])
+
+  useEffect(() => () => {
+    if (mapOpeningTimeout.current !== null) {
+      window.clearTimeout(mapOpeningTimeout.current)
+    }
+  }, [])
+
+  const openGoogleMaps = () => {
+    setMapOpening(true)
+    if (mapOpeningTimeout.current !== null) {
+      window.clearTimeout(mapOpeningTimeout.current)
+    }
+    mapOpeningTimeout.current = window.setTimeout(() => {
+      setMapOpening(false)
+      mapOpeningTimeout.current = null
+    }, 3500)
+  }
 
   const visitSection = (section: string) => {
     setMenuOpen(false)
@@ -975,10 +1000,22 @@ export default function MawaHome() {
                 </a>
               </div>
             </div>
-            <div className="mawa-contact__location">
-              <MapPin size={17} />
-              <span><strong>Kuala Lumpur, Malaysia</strong><small>Serving homes and businesses in the area</small></span>
-            </div>
+            <a
+              className="mawa-contact__location"
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open MAWA's address in Google Maps: ${BUSINESS_ADDRESS}`}
+              onClick={openGoogleMaps}
+            >
+              <MapPin className="mawa-contact__location-icon" size={17} />
+              <span>
+                <strong>SRI PENARA</strong>
+                <small>Jalan Sri Penara 1, Bandar Sri Permaisuri<br />56000, Wilayah Persekutuan Kuala Lumpur</small>
+                <small>Tap to open in Google Maps</small>
+              </span>
+              <ArrowUpRight size={15} />
+            </a>
             <div className="mawa-contact__details">
               <a className="mawa-contact__detail" href={`tel:${PHONE_NUMBER}`}>
                 <PhoneCall size={17} />
@@ -1075,16 +1112,35 @@ export default function MawaHome() {
         </div>
       </footer>
 
-      <a
-        className="mawa-whatsapp-float"
-        href={whatsappLink('Hi MAWA, I would like to ask about your air conditioning services.')}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Message MAWA on WhatsApp at ${DISPLAY_PHONE_NUMBER}`}
-      >
-        <WhatsAppIcon size={25} />
-        <span>Chat with us</span>
-      </a>
+      <div className="mawa-floating-actions">
+        {mapOpening && (
+          <div className="mawa-map-status" role="status" aria-live="polite">
+            <LoaderCircle className="mawa-map-status__spinner" size={16} />
+            <span>Opening Google Maps… A slow connection may take a moment.</span>
+          </div>
+        )}
+        <a
+          className="mawa-map-float"
+          href={GOOGLE_MAPS_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Open MAWA's address in Google Maps: ${BUSINESS_ADDRESS}`}
+          onClick={openGoogleMaps}
+        >
+          {mapOpening ? <LoaderCircle className="mawa-map-float__spinner" size={22} /> : <MapPin className="mawa-map-float__icon" size={22} />}
+          <span>Find us</span>
+        </a>
+        <a
+          className="mawa-whatsapp-float"
+          href={whatsappLink('Hi MAWA, I would like to ask about your air conditioning services.')}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Message MAWA on WhatsApp at ${WHATSAPP_DISPLAY_PHONE_NUMBER}`}
+        >
+          <WhatsAppIcon size={25} />
+          <span>Chat with us</span>
+        </a>
+      </div>
 
     </main>
   )
