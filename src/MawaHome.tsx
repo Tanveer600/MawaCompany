@@ -21,7 +21,6 @@ import {
   PanelsTopLeft,
   PhoneCall,
   ShieldCheck,
-  Share2,
   Snowflake,
   Star,
   Sparkles,
@@ -315,51 +314,12 @@ const WHATSAPP_DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
 const CONTACT_EMAIL = 'mawaaircondservice@gmail.com'
 const BUSINESS_ADDRESS =
   'SRI PENARA, JALAN SRI PENARA 1, BANDAR SRI PERMAISURI, 56000, WILAYAH PERSEKUTUAN KUALA LUMPUR'
+const BUSINESS_COORDINATES = '3.099183,101.703941'
 const GOOGLE_MAPS_URL =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS_ADDRESS)}`
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS_COORDINATES)}`
 
 const whatsappLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
-
-function createReviewRatingImage(rating: number) {
-  const canvas = document.createElement('canvas')
-  canvas.width = 720
-  canvas.height = 230
-
-  const context = canvas.getContext('2d')
-  if (!context) {
-    throw new Error('Could not create the review image.')
-  }
-
-  context.fillStyle = '#fffaf3'
-  context.fillRect(0, 0, canvas.width, canvas.height)
-  context.strokeStyle = '#e9e1d6'
-  context.lineWidth = 2
-  context.strokeRect(1, 1, canvas.width - 2, canvas.height - 2)
-
-  context.fillStyle = '#38332c'
-  context.font = '700 27px Arial, sans-serif'
-  context.fillText('MAWA SERVICE REVIEW', 34, 48)
-
-  context.font = '64px Arial, sans-serif'
-  for (let index = 0; index < 5; index += 1) {
-    context.fillStyle = index < rating ? '#d93025' : '#d8d1c7'
-    context.fillText('★', 34 + index * 75, 130)
-  }
-
-  context.fillStyle = '#766e63'
-  context.font = '20px Arial, sans-serif'
-  context.fillText(`${rating} out of 5 stars`, 34, 185)
-
-  const imageData = canvas.toDataURL('image/png')
-  const binary = window.atob(imageData.slice(imageData.indexOf(',') + 1))
-  const bytes = new Uint8Array(binary.length)
-  for (let index = 0; index < binary.length; index += 1) {
-    bytes[index] = binary.charCodeAt(index)
-  }
-
-  return new File([bytes], 'mawa-review-rating.png', { type: 'image/png' })
-}
 
 function Logo({ light = false }: { light?: boolean }) {
   return (
@@ -558,8 +518,7 @@ export default function MawaHome() {
   const [customerMessage, setCustomerMessage] = useState('')
   const [reviewRating, setReviewRating] = useState(0)
   const [reviewerName, setReviewerName] = useState('')
-  const [reviewText, setReviewText] = useState('')
-  const [reviewShareError, setReviewShareError] = useState('')
+  const [reviewDescription, setReviewDescription] = useState('')
   const [heroSlideIndex, setHeroSlideIndex] = useState(0)
   const [mapOpening, setMapOpening] = useState(false)
   const mapOpeningTimeout = useRef<number | null>(null)
@@ -614,41 +573,15 @@ export default function MawaHome() {
 
   const sendReview = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const stars = `${'★'.repeat(reviewRating)}${'☆'.repeat(5 - reviewRating)}`
     const message = [
-      'Hi MAWA, I would like to share a review about my service.',
-      `Rating: ${stars} (${reviewRating}/5)`,
-      reviewerName && `Name: ${reviewerName}`,
-      `Review: ${reviewText}`,
+      '★'.repeat(reviewRating),
+      reviewerName.trim() && `Name: ${reviewerName.trim()}`,
+      reviewDescription.trim() && `Review: ${reviewDescription.trim()}`,
     ]
       .filter(Boolean)
       .join('\n')
 
-    setReviewShareError('')
-
-    let ratingImage: File
-    try {
-      ratingImage = createReviewRatingImage(reviewRating)
-    } catch {
-      setReviewShareError('Could not prepare the red-star image. Please try again.')
-      return
-    }
-
-    if (!navigator.share || !navigator.canShare?.({ files: [ratingImage] })) {
-      setReviewShareError('This browser cannot share the red-star image. Please open this page on a phone that supports image sharing.')
-      return
-    }
-
-    void navigator.share({
-      title: 'MAWA service review',
-      text: message,
-      files: [ratingImage],
-    }).catch((error: unknown) => {
-      if (error instanceof DOMException && error.name === 'AbortError') {
-        return
-      }
-      setReviewShareError('Could not open the share menu. Please try again.')
-    })
+    window.open(whatsappLink(message), '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -1046,13 +979,13 @@ export default function MawaHome() {
             <span className="mawa-reviews__icon"><Star size={21} fill="currentColor" /></span>
             <SectionHeading
               eyebrow="Your feedback matters"
-              title="How did we do?"
-              description="Tell us about your MAWA service experience. Your feedback helps our team keep improving."
+              title="Rate your service."
+              description="Choose a star rating and optionally add your name and a few details about your experience."
               align="left"
             />
             <p className="mawa-reviews__note">
               <ShieldCheck size={17} />
-              <span>Your review is shared privately with MAWA. Choose WhatsApp from the share menu; it is not published on this website.</span>
+              <span>Your selected stars open directly in MAWA's WhatsApp chat. They are not published on this website.</span>
             </p>
           </div>
 
@@ -1096,6 +1029,7 @@ export default function MawaHome() {
             </label>
             <input
               id="mawa-review-name"
+              className="mawa-review-form__input"
               name="reviewerName"
               type="text"
               autoComplete="name"
@@ -1104,24 +1038,24 @@ export default function MawaHome() {
               value={reviewerName}
               onChange={(event) => setReviewerName(event.target.value)}
             />
-
-            <label className="mawa-review-form__label" htmlFor="mawa-review-text">Your review</label>
+            <label className="mawa-review-form__label" htmlFor="mawa-review-description">
+              Review description <span>(optional)</span>
+            </label>
             <textarea
-              id="mawa-review-text"
-              name="review"
-              rows={4}
+              id="mawa-review-description"
+              className="mawa-review-form__input mawa-review-form__description"
+              name="reviewDescription"
+              rows={3}
               maxLength={1200}
-              placeholder="Tell us what went well or how we can improve..."
-              value={reviewText}
-              onChange={(event) => setReviewText(event.target.value)}
-              required
+              placeholder="Tell us a little about your experience..."
+              value={reviewDescription}
+              onChange={(event) => setReviewDescription(event.target.value)}
             />
 
             <button className="mawa-button mawa-button--primary mawa-review-form__submit" type="submit">
-              <Share2 size={17} /><span>Share review</span><ArrowUpRight size={16} />
+              <WhatsAppIcon size={18} /><span>Send review on WhatsApp</span><ArrowUpRight size={16} />
             </button>
-            {reviewShareError && <p className="mawa-review-form__error" role="alert">{reviewShareError}</p>}
-            <p className="mawa-review-form__privacy">Choose WhatsApp in the share menu to send your red stars and review.</p>
+            <p className="mawa-review-form__privacy">Your stars and any details you add are prefilled in WhatsApp.</p>
           </form>
         </div>
       </section>
