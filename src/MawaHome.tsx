@@ -306,10 +306,10 @@ const heroSlides: HeroSlide[] = [
   ...serviceSpotlightSlides.map((slide) => ({ type: 'spotlight' as const, slide })),
 ]
 
-const WHATSAPP_NUMBER = '60172854051'
+const WHATSAPP_NUMBER = '60173132571'
 const PHONE_NUMBER = '+60173132571'
 const DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
-const WHATSAPP_DISPLAY_PHONE_NUMBER = '+60 17-285 4051'
+const WHATSAPP_DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
 const CONTACT_EMAIL = 'mawaaircondservice@gmail.com'
 const BUSINESS_ADDRESS =
   'SRI PENARA, JALAN SRI PENARA 1, BANDAR SRI PERMAISURI, 56000, WILAYAH PERSEKUTUAN KUALA LUMPUR'
