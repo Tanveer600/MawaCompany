@@ -22,6 +22,7 @@ import {
   PhoneCall,
   ShieldCheck,
   Snowflake,
+  Star,
   Sparkles,
   ThermometerSnowflake,
   UsersRound,
@@ -514,6 +515,9 @@ export default function MawaHome() {
   const [selectedService, setSelectedService] = useState('')
   const [customerName, setCustomerName] = useState('')
   const [customerMessage, setCustomerMessage] = useState('')
+  const [reviewRating, setReviewRating] = useState(0)
+  const [reviewerName, setReviewerName] = useState('')
+  const [reviewText, setReviewText] = useState('')
   const [heroSlideIndex, setHeroSlideIndex] = useState(0)
   const [mapOpening, setMapOpening] = useState(false)
   const mapOpeningTimeout = useRef<number | null>(null)
@@ -559,6 +563,21 @@ export default function MawaHome() {
       customerName && `Name: ${customerName}`,
       selectedService && `Service: ${selectedService}`,
       customerMessage && `Details: ${customerMessage}`,
+    ]
+      .filter(Boolean)
+      .join('\n')
+
+    window.open(whatsappLink(message), '_blank', 'noopener,noreferrer')
+  }
+
+  const sendReview = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const stars = `${'★'.repeat(reviewRating)}${'☆'.repeat(5 - reviewRating)}`
+    const message = [
+      'Hi MAWA, I would like to share a review about my service.',
+      `Rating: ${stars} (${reviewRating}/5)`,
+      reviewerName && `Name: ${reviewerName}`,
+      `Review: ${reviewText}`,
     ]
       .filter(Boolean)
       .join('\n')
@@ -955,6 +974,91 @@ export default function MawaHome() {
 
       <WorkShowcase />
 
+      <section className="mawa-reviews mawa-section" id="reviews">
+        <div className="mawa-container mawa-reviews__grid">
+          <div className="mawa-reviews__intro">
+            <span className="mawa-reviews__icon"><Star size={21} fill="currentColor" /></span>
+            <SectionHeading
+              eyebrow="Your feedback matters"
+              title="How did we do?"
+              description="Tell us about your MAWA service experience. Your feedback helps our team keep improving."
+              align="left"
+            />
+            <p className="mawa-reviews__note">
+              <ShieldCheck size={17} />
+              <span>Your review opens in WhatsApp for you to send. It is not published on this website.</span>
+            </p>
+          </div>
+
+          <form className="mawa-review-form" onSubmit={sendReview}>
+            <div className="mawa-review-form__heading">
+              <div>
+                <span className="mawa-eyebrow">Review MAWA</span>
+                <h3>Share your experience</h3>
+              </div>
+              <span className="mawa-review-form__badge"><MessageCircle size={18} /></span>
+            </div>
+
+            <fieldset className="mawa-review-form__rating">
+              <legend>Your rating</legend>
+              <div className="mawa-review-form__stars">
+                {Array.from({ length: 5 }, (_, index) => index + 1).map((rating) => (
+                  <label
+                    className={`mawa-review-form__star${reviewRating >= rating ? ' mawa-review-form__star--selected' : ''}`}
+                    key={rating}
+                  >
+                    <input
+                      type="radio"
+                      name="review-rating"
+                      value={rating}
+                      required
+                      checked={reviewRating === rating}
+                      onChange={(event) => setReviewRating(Number(event.currentTarget.value))}
+                      aria-label={`${rating} out of 5 stars`}
+                    />
+                    <Star size={27} fill={reviewRating >= rating ? 'currentColor' : 'none'} aria-hidden="true" />
+                  </label>
+                ))}
+                <span className="mawa-review-form__rating-label" aria-live="polite">
+                  {reviewRating ? `${reviewRating} out of 5` : 'Choose a rating'}
+                </span>
+              </div>
+            </fieldset>
+
+            <label className="mawa-review-form__label" htmlFor="mawa-review-name">
+              Your name <span>(optional)</span>
+            </label>
+            <input
+              id="mawa-review-name"
+              name="reviewerName"
+              type="text"
+              autoComplete="name"
+              maxLength={80}
+              placeholder="What should we call you?"
+              value={reviewerName}
+              onChange={(event) => setReviewerName(event.target.value)}
+            />
+
+            <label className="mawa-review-form__label" htmlFor="mawa-review-text">Your review</label>
+            <textarea
+              id="mawa-review-text"
+              name="review"
+              rows={4}
+              maxLength={1200}
+              placeholder="Tell us what went well or how we can improve..."
+              value={reviewText}
+              onChange={(event) => setReviewText(event.target.value)}
+              required
+            />
+
+            <button className="mawa-button mawa-button--primary mawa-review-form__submit" type="submit">
+              <WhatsAppIcon size={18} /><span>Send review</span><ArrowUpRight size={16} />
+            </button>
+            <p className="mawa-review-form__privacy">WhatsApp opens with your review ready to send.</p>
+          </form>
+        </div>
+      </section>
+
       <section className="mawa-cta-band">
         <div className="mawa-container mawa-cta-band__inner">
           <span className="mawa-cta-band__icon"><PhoneCall size={21} /></span>
@@ -1088,6 +1192,7 @@ export default function MawaHome() {
                 ['Prices', 'pricing'],
                 ['About MAWA', 'about'],
                 ['Why choose us', 'why-mawa'],
+                ['Leave a review', 'reviews'],
               ].map(([label, section]) => (
                 <button type="button" key={section} onClick={() => visitSection(section)}>{label}</button>
               ))}

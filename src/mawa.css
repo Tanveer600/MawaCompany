@@ -1767,6 +1767,210 @@ body {
   text-align: center;
 }
 
+.mawa-reviews {
+  scroll-margin-top: 110px;
+  background: #f7f3ec;
+}
+
+.mawa-reviews__grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 0.9fr 1fr;
+  gap: 78px;
+}
+
+.mawa-reviews__icon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid #f0dfb8;
+  border-radius: 12px;
+  color: #b3832c;
+  background: #fffaf0;
+}
+
+.mawa-reviews__intro .mawa-section-heading {
+  margin: 18px 0 0;
+}
+
+.mawa-reviews__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 22px 0 0;
+  color: #766e63;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.mawa-reviews__note svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: #8b5937;
+}
+
+.mawa-review-form {
+  min-width: 0;
+  padding: 29px;
+  border: 1px solid #e9e1d6;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 16px 38px rgb(45 38 29 / 7%);
+}
+
+.mawa-review-form__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.mawa-review-form__heading h3 {
+  margin: 5px 0 0;
+  color: var(--mawa-accent);
+  font-size: 21px;
+  font-weight: 730;
+  letter-spacing: -0.04em;
+}
+
+.mawa-review-form__badge {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 9px;
+  color: #119d60;
+  background: #e8f7ef;
+}
+
+.mawa-review-form__rating {
+  margin: 0 0 13px;
+  padding: 0;
+  border: 0;
+}
+
+.mawa-review-form__rating legend,
+.mawa-review-form__label {
+  margin-bottom: 7px;
+  color: #4c453b;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mawa-review-form__stars {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 3px;
+}
+
+.mawa-review-form__star {
+  position: relative;
+  display: grid;
+  width: 32px;
+  height: 34px;
+  place-items: center;
+  margin: 0;
+  color: #c9c0b5;
+  cursor: pointer;
+  transition: color 140ms ease, transform 140ms ease;
+}
+
+.mawa-review-form__star--selected {
+  color: #d29a28;
+}
+
+.mawa-review-form__star:hover {
+  transform: translateY(-2px);
+  color: #b78320;
+}
+
+.mawa-review-form__star input {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.mawa-review-form__star:focus-within {
+  border-radius: 4px;
+  outline: 3px solid rgb(168 110 67 / 35%);
+  outline-offset: 2px;
+}
+
+.mawa-review-form__rating-label {
+  margin-left: 9px;
+  color: #877d71;
+  font-size: 10px;
+}
+
+.mawa-review-form__label {
+  display: block;
+  margin: 13px 0 6px;
+}
+
+.mawa-review-form__label span {
+  color: #918679;
+  font-weight: 400;
+}
+
+.mawa-review-form input[type="text"],
+.mawa-review-form textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #e6ded2;
+  border-radius: 6px;
+  outline: none;
+  color: #37332c;
+  background: #fff;
+  font-size: 11px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.mawa-review-form input[type="text"]:focus,
+.mawa-review-form textarea:focus {
+  border-color: #c09060;
+  box-shadow: 0 0 0 3px rgb(168 110 67 / 12%);
+}
+
+.mawa-review-form input::placeholder,
+.mawa-review-form textarea::placeholder {
+  color: #988c7e;
+}
+
+.mawa-review-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.mawa-review-form__submit {
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 17px;
+}
+
+.mawa-review-form__submit span {
+  text-align: center;
+}
+
+.mawa-review-form__privacy {
+  margin: 11px 0 0;
+  color: #877d71;
+  font-size: 9px;
+  text-align: center;
+}
+
 .mawa-footer {
   color: #e7ddd0;
   background: #282521;
@@ -2050,6 +2254,10 @@ body {
   .mawa-process__grid,
   .mawa-contact__grid {
     gap: 60px;
+  }
+
+  .mawa-reviews__grid {
+    gap: 48px;
   }
 
   .mawa-pricing__details {
@@ -2359,6 +2567,15 @@ body {
   .mawa-contact__grid {
     grid-template-columns: 1fr;
     gap: 39px;
+  }
+
+  .mawa-reviews__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .mawa-review-form {
+    padding: 23px 20px;
   }
 
   .mawa-about__visual {
