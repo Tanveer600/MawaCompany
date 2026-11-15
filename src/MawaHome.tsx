@@ -314,9 +314,8 @@ const WHATSAPP_DISPLAY_PHONE_NUMBER = '+60 17-313 2571'
 const CONTACT_EMAIL = 'mawaaircondservice@gmail.com'
 const BUSINESS_ADDRESS =
   'SRI PENARA, JALAN SRI PENARA 1, BANDAR SRI PERMAISURI, 56000, WILAYAH PERSEKUTUAN KUALA LUMPUR'
-const BUSINESS_COORDINATES = '3.099183,101.703941'
 const GOOGLE_MAPS_URL =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS_COORDINATES)}`
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS_ADDRESS)}`
 
 const whatsappLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
@@ -1205,7 +1204,7 @@ export default function MawaHome() {
               </a>
               <a href={`tel:${PHONE_NUMBER}`}>{DISPLAY_PHONE_NUMBER}</a>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-              <span className="mawa-footer__location"><MapPin size={14} /> Kuala Lumpur, Malaysia</span>
+              <span className="mawa-footer__location"><MapPin size={14} /> Sri Penara, Kuala Lumpur</span>
             </div>
             <button className="mawa-footer__top-link" type="button" onClick={() => visitSection('home')} aria-label="Back to top">
               <ArrowUpRight size={17} />
